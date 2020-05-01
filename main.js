@@ -78,11 +78,13 @@ function update() {
 
         player.x += player.stats.speed + player.stats.boost;
         console.log(player.stats.speed + player.stats.boost)
+        player.flipX = false;
 
     } else if (leftKey.isDown && player.x > 0 +
         (player.displayWidth * player.originX)) {
 
         player.x -= (player.stats.speed + player.stats.boost);
+        player.flipX = true;
     }
     if (upKey.isDown) {
         player.y -= (player.stats.speed + player.stats.boost);
@@ -112,11 +114,12 @@ function update() {
 }
 
 function makePlayer(x,y) {
-    var player = this.add.sprite(x,y, "player").setOrigin(0.5, 1);
+    var player = this.add.sprite(x,y, "player").setOrigin(0.5);
     player.stats = {
         speed: 5,
         boost: 0
     };
+    player.scale = 2;
 
     return player;
 }
