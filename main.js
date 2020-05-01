@@ -12,16 +12,12 @@ var config = {
 
 //slslslls
         physics: {
-            default: 'matter',
-            matter: {
-                enableSleeping: true,
-                gravity: {
-                    y: 0
-                }
-            }
+            default: 'arcade'
+
         },
         extend: {
-            makePlayer: makePlayer
+            makePlayer: makePlayer,
+            shootProjectile: shootProjectile
         }
     }
 };
@@ -41,17 +37,24 @@ function preload() {
         frameWidth: 32,
         frameHeight: 32
     });
+    this.load.spritesheet("peashooter", "assets/peaShootSpritesheet.png", {
+        frameWidth: 32,
+        frameHeight: 13
+    });
 }
 
 function create() {
-    player = this.makePlayer(this.sys.canvas.width / 2, this.sys.canvas.height);
+    player = this.makePlayer(this.sys.canvas.width / 2, this.sys.canvas.height / 2);
 
-    leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-    rightKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-    upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
-    downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+
+
+    //input keys
+    leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+    rightKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+    upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+    downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
     shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
-
+    commaKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.COMMA);
     this.anims.create({
         key: "player_anim",
         frames: this.anims.generateFrameNumbers("player"),
@@ -63,6 +66,13 @@ function create() {
         key: "player_boost",
         frames: this.anims.generateFrameNumbers("player_boosting"),
         frameRate: 14,
+        repeat: -1
+
+    });
+    this.anims.create({
+        key: "peashooter_anim",
+        frames: this.anims.generateFrameNumbers("peashooter"),
+        frameRate: 12,
         repeat: -1
 
     });
@@ -94,14 +104,19 @@ function update() {
         player.y += player.stats.speed + player.stats.boost;
 
     }
+
+
+    if (commaKey.isDown) {
+        shootProjectile();
+    }
+
+    //README: THIS MUST BE THE LAST TEST (SHIFT TO BOOST)
     if (shiftKey.isDown) {
 
         player.stats.boost = 3;
         console.log("pressing shift");
         player.play("player_boost", true);
     }
-
-
     else {
         player.stats.boost = 0;
         player.x += 0.25;
@@ -112,7 +127,6 @@ function update() {
 
 
 }
-
 function makePlayer(x,y) {
     var player = this.add.sprite(x,y, "player").setOrigin(0.5);
     player.stats = {
@@ -122,4 +136,9 @@ function makePlayer(x,y) {
     player.scale = 2;
 
     return player;
+}
+
+
+function shootProjectile() {
+    let projectile = new Peashooter(this, player.x, player.y);
 }
