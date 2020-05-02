@@ -14,8 +14,6 @@ class Projectile extends Phaser.GameObjects.Sprite {
 
 
 }
-console.log("Im here!!!")
-
 
 class Peashooter extends Projectile {
     constructor(scene, x, y) {

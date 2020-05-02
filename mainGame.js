@@ -1,11 +1,11 @@
-console.log("im here toooo!!!!");
+
 class MainGame extends Phaser.Scene {
     constructor() {
         super("mainGame");
 
     }
 
-    function preload() {
+    preload() {
         this.load.spritesheet("player", "assets/alienSpritesheet.png", {
             frameWidth: 32,
             frameHeight: 32
@@ -20,18 +20,19 @@ class MainGame extends Phaser.Scene {
         });
     }
 
-    function create() {
-        let player = this.makePlayer(this.sys.canvas.width / 2, this.sys.canvas.height / 2);
+    create() {
+        this.player = this.makePlayer(this.sys.canvas.width / 2, this.sys.canvas.height / 2);
 
 
 
         //input keys
-        const leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
-        const rightKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
-        const upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
-        const downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-        const shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
-        const commaKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.COMMA);
+        this.leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        this.rightKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        this.upKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+        this.downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
+        this.commaKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.COMMA);
+
         this.anims.create({
             key: "player_anim",
             frames: this.anims.generateFrameNumbers("player"),
@@ -54,70 +55,67 @@ class MainGame extends Phaser.Scene {
 
         });
 
-        player.play("player_anim");
+        this.player.play("player_anim");
     }
 
-    function update() {
+    update() {
 
 
-        if (rightKey.isDown && player.x < this.sys.canvas.width -
-            (player.displayWidth * player.originX)) {
+        if (this.rightKey.isDown && this.player.x < this.sys.canvas.width -
+            (this.player.displayWidth * this.player.originX)) {
 
-            player.x += player.stats.speed + player.stats.boost;
-            console.log(player.stats.speed + player.stats.boost)
-            player.flipX = false;
+            this.player.x += this.player.stats.speed + this.player.stats.boost;
+            console.log(this.player.stats.speed + this.player.stats.boost)
+            this.player.flipX = false;
 
-        } else if (leftKey.isDown && player.x > 0 +
-            (player.displayWidth * player.originX)) {
+        } else if (this.leftKey.isDown && this.player.x > 0 +
+            (this.player.displayWidth * this.player.originX)) {
 
-            player.x -= (player.stats.speed + player.stats.boost);
-            player.flipX = true;
+            this.player.x -= (this.player.stats.speed + this.player.stats.boost);
+            this.player.flipX = true;
         }
-        if (upKey.isDown) {
-            player.y -= (player.stats.speed + player.stats.boost);
-        }
-
-        if (downKey.isDown) {
-            player.y += player.stats.speed + player.stats.boost;
-
+        if (this.upKey.isDown) {
+            this.player.y -= (this.player.stats.speed + this.player.stats.boost);
         }
 
+        if (this.downKey.isDown) {
+            this.player.y += this.player.stats.speed + this.player.stats.boost;
 
-        if (commaKey.isDown) {
+        }
+
+//README: THIS MUST BE THE LAST TEST (SHIFT TO BOOST)
+        if (this.commaKey.isDown) {
             shootProjectile();
-        }
+        } else if (this.shiftKey.isDown) {
 
-        //README: THIS MUST BE THE LAST TEST (SHIFT TO BOOST)
-        if (shiftKey.isDown) {
-
-            player.stats.boost = 3;
+            this.player.stats.boost = 3;
             console.log("pressing shift");
-            player.play("player_boost", true);
+            this.player.play("player_boost", true);
         }
         else {
-            player.stats.boost = 0;
-            player.x += 0.25;
-            player.play("player_anim", true);
+            this.player.stats.boost = 0;
+            this.player.x += 0.25;
+            this.player.play("player_anim", true);
 
 
         }
 
 
     }
-    function makePlayer(x,y) {
-        var player = this.add.sprite(x,y, "player").setOrigin(0.5);
-        player.stats = {
+    makePlayer(x,y) {
+        var p = this.add.sprite(x,y, "player").setOrigin(0.5);
+        p.stats = {
             speed: 5,
             boost: 0
         };
-        player.scale = 2;
+        p.scale = 2;
 
-        return player;
+        return p;
     }
 
 
-    function shootProjectile() {
-        let projectile = new Peashooter(this, player.x, player.y);
+    shootProjectile() {
+        let projectile = new Peashooter(this, this.player.x, player.y);
     }
 
 
