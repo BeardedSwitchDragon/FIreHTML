@@ -22,8 +22,11 @@ class MainGame extends Phaser.Scene {
 
     create() {
         this.player = this.makePlayer(this.sys.canvas.width / 2, this.sys.canvas.height / 2);
+        this.canShoot = true;
+        this.projectileROF = {
+            peashooter: 1000,
 
-
+        };
 
         //input keys
         this.leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -32,7 +35,7 @@ class MainGame extends Phaser.Scene {
         this.downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         this.commaKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.COMMA);
-
+        this.startTimer = new Date().getTime();
         this.anims.create({
             key: "player_anim",
             frames: this.anims.generateFrameNumbers("player"),
@@ -58,7 +61,28 @@ class MainGame extends Phaser.Scene {
         this.player.play("player_anim");
     }
 
+    delay(delay) {
+
+    }
+
+    // canShootAgain() {
+    //     return function () {
+    //         if (new Date().now - lastCall < projectileROF.peashooter) {
+    //             return false;
+    //         }
+    //         this.lastCall = new Date().now;
+    //         console.log(this.lastCall);
+    //     //do stuff
+    //     }
+    // }
+
     update() {
+
+        if (this.canShoot == false) {
+
+
+
+        }
 
 
         if (this.rightKey.isDown && this.player.x < this.sys.canvas.width -
@@ -84,8 +108,11 @@ class MainGame extends Phaser.Scene {
         }
 
 //README: THIS MUST BE THE LAST TEST (SHIFT TO BOOST)
-        if (this.commaKey.isDown) {
+        if (this.commaKey.isDown && (new Date().getTime() - this.startTimer > this.projectileROF.peashooter)) {
+            console.log("adsdads")
             this.shootProjectile();
+            this.canShoot = false;
+            this.startTimer = new Date().getTime();
         } else if (this.shiftKey.isDown) {
 
             this.player.stats.boost = 3;
@@ -115,7 +142,11 @@ class MainGame extends Phaser.Scene {
 
 
     shootProjectile() {
-        let projectile = new Peashooter(this, this.player.x, this.player.y);
+        let rateOfFire = 0;
+        const x = this.player.x;
+        const y = this.player.y;
+        let projectile = new Peashooter(this, x, y);
+        console.log(this.player.x);
     }
 
 

@@ -7,10 +7,29 @@ class Projectile extends Phaser.GameObjects.Sprite {
         this.rateOfFire = 0;
         this.x = x;
         this.y = y;
+        console.log(this.x);
+        scene.add.sprite(this);
         scene.add.existing(this);
+        scene.physics.world.enableBody(this);
+        this.body.velocity.x = 250;
+        console.log("spawned");
 
 
     }
+
+    // shoot() {
+    //     console.log(this.x);
+    //     var timer = window.setTimeout(function() {
+    //         console.log(this.x);
+    //         while (this.x < 800) {
+    //
+    //             this.x += this.speed;
+    //             console.log("goiiing")
+    //         }
+    //         //console.log(this.x);
+    //     }, (this.rateOfFire * 1000));
+    //     // window.clearTimeout(timer);
+    // }
 
 
 }

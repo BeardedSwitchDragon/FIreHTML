@@ -10,11 +10,12 @@ var config = {
 //         create: create,
 //         update: update,
 //
-// //slslslls
-//         physics: {
-//             default: 'arcade'
-//
-//         },
+//slslslls
+        physics: {
+            default: 'arcade'
+            
+
+        },
 //         extend: {
 //             makePlayer: makePlayer,
 //             shootProjectile: shootProjectile
