@@ -7,7 +7,7 @@ class Projectile extends Phaser.GameObjects.Sprite {
         this.rateOfFire = 0;
         this.x = x;
         this.y = y;
-        scene.add.sprite(this);
+        scene.add.existing(this);
 
 
     }
@@ -18,5 +18,8 @@ class Projectile extends Phaser.GameObjects.Sprite {
 class Peashooter extends Projectile {
     constructor(scene, x, y) {
         super(scene, 8, 5, 1, x, y, "peashooter");
+        console.log("created");
+        this.play("peashooter_anim", true);
+        console.log("playing anim");
     }
 }

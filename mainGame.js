@@ -85,7 +85,7 @@ class MainGame extends Phaser.Scene {
 
 //README: THIS MUST BE THE LAST TEST (SHIFT TO BOOST)
         if (this.commaKey.isDown) {
-            shootProjectile();
+            this.shootProjectile();
         } else if (this.shiftKey.isDown) {
 
             this.player.stats.boost = 3;
@@ -115,7 +115,7 @@ class MainGame extends Phaser.Scene {
 
 
     shootProjectile() {
-        let projectile = new Peashooter(this, this.player.x, player.y);
+        let projectile = new Peashooter(this, this.player.x, this.player.y);
     }
 
 
