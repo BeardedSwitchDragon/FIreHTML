@@ -20,22 +20,42 @@ class MainGame extends Phaser.Scene {
         });
         this.load.image("ground_bg", "assets/furtherBG.png");
         this.load.image("mountain_bg", "assets/mountain.png");
+        //this.load.image("cloud_bg", "assets/cloud.png");
+
+        this.load.spritesheet("sun", "assets/sunSpritesheet.png", {
+            frameWidth: 16,
+            frameHeight: 16
+        });
     }
 
     create() {
         const GROUND_HEIGHT = game.config.height * 3;
         this.cameras.main.setBackgroundColor("#F2C0A2");
+
+        // this.clouds = this.add.tileSprite(0,0, game.config.width, GROUND_HEIGHT, "cloud_bg");
+        // this.clouds.setOrigin(0,0);
+        // //this.clouds.setScale(5,5);
+        // this.clouds.tilePositionX = game.config.width / 2;
+        // this.clouds.tilePositionY = game.config.height / 2;
+
+
+        this.mountain_bg = this.add.tileSprite(0, 0, game.config.width, GROUND_HEIGHT, "mountain_bg");
+
+        this.mountain_bg.tilePositionY = 240;
+        this.mountain_bg.setOrigin(0,0);
+        this.mountain_bg.setScrollFactor(0);
+
         this.ground_bg = this.add.tileSprite(0.5, 0.5, game.config.width, GROUND_HEIGHT, "ground_bg");
         //this.ground_bg.flipY = true;
 
         this.ground_bg.setOrigin(0,0);
         this.ground_bg.setScrollFactor(0);
 
-        this.mountain_bg = this.add.tileSprite(0, 0, game.config.width, GROUND_HEIGHT, "mountain_bg");
-        this.mountain_bg.setTileScale(3, 4);
-        this.mountain_bg.tilePositionY = 450;
-        this.mountain_bg.setOrigin(0,0);
-        this.mountain_bg.setScrollFactor(0);
+        this.sun = this.add.sprite(2,2, "sun");
+        this.sun.setOrigin(0,0);
+        this.sun.scale = 3;
+
+
         // this.mountain_bg.tileScaleX = 1.1;
         // this.mountain_bg.tileScaleY = 1.1;
         //this.mountain_bg.setSize(game.config.width, GROUND_HEIGHT);
@@ -79,7 +99,15 @@ class MainGame extends Phaser.Scene {
 
         });
 
+        this.anims.create({
+            key: "sun_anim",
+            frames: this.anims.generateFrameNumbers("sun"),
+            frameRate: 2,
+            repeat: -1
+        });
+
         this.player.play("player_anim");
+        this.sun.play("sun_anim");
     }
 
 
@@ -104,8 +132,8 @@ class MainGame extends Phaser.Scene {
             }
         });
 
-        this.ground_bg.tilePositionX += 0.1;
-        this.mountain_bg.tilePositionX += 0.2;
+        this.ground_bg.tilePositionX += 0.25;
+        this.mountain_bg.tilePositionX += 0.05;
 
 
 
