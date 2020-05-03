@@ -26,6 +26,11 @@ class MainGame extends Phaser.Scene {
             frameWidth: 16,
             frameHeight: 16
         });
+
+        this.load.spritesheet("homikazee", "assets/homikazeeSpritesheet.png", {
+            frameWidth: 32,
+            frameHeight: 17
+        })
     }
 
     create() {
@@ -107,10 +112,17 @@ class MainGame extends Phaser.Scene {
             repeat: -1
         });
 
+        this.anims.create({
+            key: "homikazee_anim",
+            frames: this.anims.generateFrameNumbers("homikazee"),
+            frameRate: 12,
+            repeat: -1
+        });
         this.physics.add.sprite(this.player);
 
         this.player.play("player_anim");
         this.sun.play("sun_anim");
+        //this.cameras.main.startFollow(this.player);
     }
 
 
@@ -135,20 +147,20 @@ class MainGame extends Phaser.Scene {
             }
         });
 
-        this.ground_bg.tilePositionX += 0.25;
-        this.mountain_bg.tilePositionX += 0.05;
+
+        this.mountain_bg.tilePositionX += 0.25;
+        this.ground_bg.tilePositionX += 0.5;
 
 
 
-        if (this.rightKey.isDown && this.player.x < width -
-            (this.player.displayWidth * this.player.originX)) {
+
+        if (this.rightKey.isDown) {
 
             this.player.x += this.player.stats.speed + this.player.stats.boost;
-            console.log(this.player.stats.speed + this.player.stats.boost)
+            console.log(this.player.stats.speed + this.player.stats.boost);
             this.player.flipX = false;
 
-        } else if (this.leftKey.isDown && this.player.x > 0 +
-            (this.player.displayWidth * this.player.originX)) {
+        } else if (this.leftKey.isDown) {
 
             this.player.x -= (this.player.stats.speed + this.player.stats.boost);
             this.player.flipX = true;
@@ -161,6 +173,13 @@ class MainGame extends Phaser.Scene {
             this.player.y += this.player.stats.speed + this.player.stats.boost;
 
         }
+
+        if (this.player.x <= this.cameras.main.scrollX) {
+            this.player.x = this.cameras.main.scrollX + 10;
+        } else if (this.player.x >= width -
+            (this.player.displayWidth * this.player.originX)  + this.cameras.main.scrollX) {
+                this.player.x -= 20;
+            }
 
 //README: THIS MUST BE THE LAST TEST (SHIFT TO BOOST)
         if (this.commaKey.isDown && (new Date().getTime() - this.startTimer > this.projectileROF.peashooter)) {
@@ -181,7 +200,10 @@ class MainGame extends Phaser.Scene {
 
 
         }
+        //console.log(this.cameras.main.scrollX + " + " + this.player.x);
+        this.cameras.main.scrollX++;
         this.player.x += 0.25;
+        this.sun.x++;
 
 
     }
@@ -203,7 +225,7 @@ class MainGame extends Phaser.Scene {
         const x = this.player.x;
         const y = this.player.y;
         let projectile = new Peashooter(this, x, y);
-        this.physics.add(projectile);
+        this.physics.add.sprite(projectile);
         console.log(this.player.x);
     }
 
