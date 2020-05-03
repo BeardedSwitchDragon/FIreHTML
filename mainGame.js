@@ -18,13 +18,34 @@ class MainGame extends Phaser.Scene {
             frameWidth: 32,
             frameHeight: 13
         });
+        this.load.image("ground_bg", "assets/furtherBG.png");
+        this.load.image("mountain_bg", "assets/mountain.png");
     }
 
     create() {
+        const GROUND_HEIGHT = game.config.height * 3;
+        this.cameras.main.setBackgroundColor("#F2C0A2");
+        this.ground_bg = this.add.tileSprite(0.5, 0.5, game.config.width, GROUND_HEIGHT, "ground_bg");
+        //this.ground_bg.flipY = true;
+
+        this.ground_bg.setOrigin(0,0);
+        this.ground_bg.setScrollFactor(0);
+
+        this.mountain_bg = this.add.tileSprite(0, 0, game.config.width, GROUND_HEIGHT, "mountain_bg");
+        this.mountain_bg.setTileScale(3, 4);
+        this.mountain_bg.tilePositionY = 450;
+        this.mountain_bg.setOrigin(0,0);
+        this.mountain_bg.setScrollFactor(0);
+        // this.mountain_bg.tileScaleX = 1.1;
+        // this.mountain_bg.tileScaleY = 1.1;
+        //this.mountain_bg.setSize(game.config.width, GROUND_HEIGHT);
         this.player = this.makePlayer(this.sys.canvas.width / 2, this.sys.canvas.height / 2);
+
+
         this.canShoot = true;
+        this.projectiles = this.add.group();
         this.projectileROF = {
-            peashooter: 1000,
+            peashooter: 1000
 
         };
 
@@ -61,9 +82,6 @@ class MainGame extends Phaser.Scene {
         this.player.play("player_anim");
     }
 
-    delay(delay) {
-
-    }
 
     // canShootAgain() {
     //     return function () {
@@ -78,14 +96,20 @@ class MainGame extends Phaser.Scene {
 
     update() {
 
-        if (this.canShoot == false) {
+        let width = this.sys.canvas.width;
+        let height = this.sys.canvas.height;
+        this.projectiles.getChildren().forEach(function(projectile) {
+            if (projectile.x > width) {
+                projectile.destroy();
+            }
+        });
+
+        this.ground_bg.tilePositionX += 0.1;
+        this.mountain_bg.tilePositionX += 0.2;
 
 
 
-        }
-
-
-        if (this.rightKey.isDown && this.player.x < this.sys.canvas.width -
+        if (this.rightKey.isDown && this.player.x < width -
             (this.player.displayWidth * this.player.originX)) {
 
             this.player.x += this.player.stats.speed + this.player.stats.boost;
@@ -121,14 +145,16 @@ class MainGame extends Phaser.Scene {
         }
         else {
             this.player.stats.boost = 0;
-            this.player.x += 0.25;
+
             this.player.play("player_anim", true);
 
 
         }
+        this.player.x += 0.25;
 
 
     }
+
     makePlayer(x,y) {
         var p = this.add.sprite(x,y, "player").setOrigin(0.5);
         p.stats = {

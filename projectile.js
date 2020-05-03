@@ -9,6 +9,7 @@ class Projectile extends Phaser.GameObjects.Sprite {
         this.y = y;
         console.log(this.x);
         scene.add.sprite(this);
+        scene.projectiles.add(this);
         scene.add.existing(this);
         scene.physics.world.enableBody(this);
         this.body.velocity.x = 250;
