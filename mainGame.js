@@ -64,6 +64,7 @@ class MainGame extends Phaser.Scene {
 
         this.canShoot = true;
         this.projectiles = this.add.group();
+        this.enemies = this.add.group();
         this.projectileROF = {
             peashooter: 1000
 
@@ -105,6 +106,8 @@ class MainGame extends Phaser.Scene {
             frameRate: 2,
             repeat: -1
         });
+
+        this.physics.add.sprite(this.player);
 
         this.player.play("player_anim");
         this.sun.play("sun_anim");
@@ -200,6 +203,7 @@ class MainGame extends Phaser.Scene {
         const x = this.player.x;
         const y = this.player.y;
         let projectile = new Peashooter(this, x, y);
+        this.physics.add(projectile);
         console.log(this.player.x);
     }
 

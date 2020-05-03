@@ -12,7 +12,7 @@ class Projectile extends Phaser.GameObjects.Sprite {
         scene.projectiles.add(this);
         scene.add.existing(this);
         scene.physics.world.enableBody(this);
-        this.body.velocity.x = 250;
+        this.body.velocity.x = 100 + (speed * 20);
         console.log("spawned");
 
 
