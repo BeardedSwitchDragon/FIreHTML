@@ -70,7 +70,7 @@ class MainGame extends Phaser.Scene {
         //this.mountain_bg.setSize(game.config.width, GROUND_HEIGHT);
         this.enemies = this.add.group();
         this.player = this.makePlayer(this.sys.canvas.width / 2, this.sys.canvas.height / 2);
-        this.testEnemy = new Homikazee(this, this.sys.canvas.width/2, this.sys.canvas.height/2);
+        this.testEnemy = new Homikazee(this, this.sys.canvas.width * 1.25, this.sys.canvas.height/2);
 
 
         this.testEnemy.scale = 3;
@@ -147,6 +147,10 @@ class MainGame extends Phaser.Scene {
 
 
         });
+
+        this.physics.add.collider(this.enemies, this.player, function(enemy, player) {
+            enemy.destruct();
+        })
         //console.log(this.player.body);
         this.player.play("player_anim");
         this.sun.play("sun_anim");
