@@ -1,8 +1,8 @@
-class Projectile extends Phaser.GameObjects.Sprite {
-    constructor(scene, speed, damageToDeal, rateOfFire, x, y, name, life) {
+class Projectile extends Phaser.Physics.Arcade.Sprite {
+    constructor(scene, speed, damageToDeal, rateOfFire, x, y, name, life, isFlipped) {
 
         super(scene, x, y, name);
-        this.speed = 0;
+        this.speed = 100 + (speed * 20);
         this.damageToDeal = 0;
         this.rateOfFire = 0;
         this.x = x;
@@ -13,7 +13,16 @@ class Projectile extends Phaser.GameObjects.Sprite {
         scene.projectiles.add(this);
         scene.add.existing(this);
         scene.physics.world.enableBody(this);
-        this.body.velocity.x = 100 + (speed * 20);
+        this.flipX = isFlipped;
+
+        console.log(this.flipX);
+        if (this.flipX) {
+            this.speed *= -1;
+            console.log("lolol");
+        }
+        //console.log(this.body);
+        this.body.velocity.x = this.speed;
+
         console.log("spawned");
 
 
@@ -21,7 +30,7 @@ class Projectile extends Phaser.GameObjects.Sprite {
 
     update() {
         if (this.x - this.begin > this.life) {
-
+            this.destroy();
         }
     }
 
@@ -43,9 +52,9 @@ class Projectile extends Phaser.GameObjects.Sprite {
 }
 
 class Peashooter extends Projectile {
-    constructor(scene, x, y) {
-        super(scene, 8, 5, 1, x, y, "peashooter", 400);
-        console.log("created");
+    constructor(scene, x, y, isFlipped) {
+        super(scene, 8, 5, 1, x, y, "peashooter", 400, isFlipped);
+        console.log(this.body);
         this.play("peashooter_anim", true);
         console.log("playing anim");
     }

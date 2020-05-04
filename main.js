@@ -12,7 +12,8 @@ var config = {
 //
 //slslslls
         physics: {
-            default: 'arcade'
+            default: 'arcade',
+            debug: true
 
 
         },

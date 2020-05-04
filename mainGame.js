@@ -30,7 +30,11 @@ class MainGame extends Phaser.Scene {
         this.load.spritesheet("homikazee", "assets/homikazeeSpritesheet.png", {
             frameWidth: 32,
             frameHeight: 17
-        })
+        });
+        this.load.spritesheet("explosion", "assets/explosionSpritesheet.png", {
+            frameWidth: 32,
+            frameHeight: 32
+        });
     }
 
     create() {
@@ -68,9 +72,7 @@ class MainGame extends Phaser.Scene {
         this.player = this.makePlayer(this.sys.canvas.width / 2, this.sys.canvas.height / 2);
         this.testEnemy = new Homikazee(this, this.sys.canvas.width/2, this.sys.canvas.height/2);
 
-        this.add.sprite(this.testEnemy);
-        this.enemies.add(this.testEnemy);
-        this.add.existing(this.testEnemy);
+
         this.testEnemy.scale = 3;
 
 
@@ -120,14 +122,32 @@ class MainGame extends Phaser.Scene {
         });
 
         this.anims.create({
+            key: "explosion_anim",
+            frames: this.anims.generateFrameNumbers("explosion"),
+            frameRate: 12,
+            repeat: 0,
+            hideOnComplete: true
+        });
+
+        this.anims.create({
             key: "homikazee_anim",
             frames: this.anims.generateFrameNumbers("homikazee"),
             frameRate: 12,
             repeat: -1
         });
+        this.testEnemy.play("homikazee_anim");
 
 
-        console.log(this.player.body);
+        this.physics.add.collider(this.projectiles, this.enemies, function(projectile, enemy) {
+            console.log("collision is working");
+            console.log(projectile.body);
+            console.log(enemy.body);
+            enemy.destruct();
+            projectile.destroy();
+
+
+        });
+        //console.log(this.player.body);
         this.player.play("player_anim");
         this.sun.play("sun_anim");
 
@@ -148,7 +168,9 @@ class MainGame extends Phaser.Scene {
     // }
 
     update() {
-        this.testEnemy.travel(this.player, this);
+        if (this.testEnemy.body != undefined) {
+            this.testEnemy.travel(this.player, this);
+    }
 
         let width = this.sys.canvas.width;
         let height = this.sys.canvas.height;
@@ -166,7 +188,7 @@ class MainGame extends Phaser.Scene {
         if (this.rightKey.isDown) {
 
             this.player.x += this.player.stats.speed + this.player.stats.boost;
-            console.log(this.player.stats.speed + this.player.stats.boost);
+            //console.log(this.player.stats.speed + this.player.stats.boost);
             this.player.flipX = false;
 
         } else if (this.leftKey.isDown) {
@@ -199,7 +221,7 @@ class MainGame extends Phaser.Scene {
         } else if (this.shiftKey.isDown) {
 
             this.player.stats.boost = 3;
-            console.log("pressing shift");
+            //console.log("pressing shift");
             this.player.play("player_boost", true);
         }
         else {
@@ -234,9 +256,11 @@ class MainGame extends Phaser.Scene {
         let rateOfFire = 0;
         const x = this.player.x;
         const y = this.player.y;
-        let projectile = new Peashooter(this, x, y);
+        console.log(this.player.flipX);
+        let projectile = new Peashooter(this, x, y, this.player.flipX);
+        //console.log(this.enemies.getChildren());
         this.physics.add.sprite(projectile);
-        console.log(this.player.x);
+        //console.log(this.player.x);
     }
 
 
