@@ -1,5 +1,5 @@
 class Projectile extends Phaser.GameObjects.Sprite {
-    constructor(scene, speed, damageToDeal, rateOfFire, x, y, name) {
+    constructor(scene, speed, damageToDeal, rateOfFire, x, y, name, life) {
 
         super(scene, x, y, name);
         this.speed = 0;
@@ -7,6 +7,7 @@ class Projectile extends Phaser.GameObjects.Sprite {
         this.rateOfFire = 0;
         this.x = x;
         this.y = y;
+        this.begin = x;
         console.log(this.x);
         scene.add.sprite(this);
         scene.projectiles.add(this);
@@ -16,6 +17,12 @@ class Projectile extends Phaser.GameObjects.Sprite {
         console.log("spawned");
 
 
+    }
+
+    update() {
+        if (this.x - this.begin > this.life) {
+
+        }
     }
 
     // shoot() {
@@ -37,7 +44,7 @@ class Projectile extends Phaser.GameObjects.Sprite {
 
 class Peashooter extends Projectile {
     constructor(scene, x, y) {
-        super(scene, 8, 5, 1, x, y, "peashooter");
+        super(scene, 8, 5, 1, x, y, "peashooter", 400);
         console.log("created");
         this.play("peashooter_anim", true);
         console.log("playing anim");
