@@ -148,9 +148,13 @@ class MainGame extends Phaser.Scene {
 
 
         });
+        //console.log(this.player.body);
 
         this.physics.add.collider(this.enemies, this.player, function(enemy, player) {
+
             enemy.destruct();
+            player.takeDamage(10);
+            console.log(player.health);
         })
         //console.log(this.player.body);
         this.player.play("player_anim");
@@ -195,21 +199,21 @@ class MainGame extends Phaser.Scene {
 
         if (this.rightKey.isDown) {
 
-            this.player.x += this.player.stats.speed + this.player.stats.boost;
+            this.player.moveX();
             //console.log(this.player.stats.speed + this.player.stats.boost);
             this.player.flipX = false;
 
         } else if (this.leftKey.isDown) {
 
-            this.player.x -= (this.player.stats.speed + this.player.stats.boost);
+            this.player.moveX(-1);
             this.player.flipX = true;
         }
         if (this.upKey.isDown) {
-            this.player.y -= (this.player.stats.speed + this.player.stats.boost);
+            this.player.moveY(-1);
         }
 
         if (this.downKey.isDown) {
-            this.player.y += this.player.stats.speed + this.player.stats.boost;
+            this.player.moveY();
 
         }
 
@@ -228,12 +232,12 @@ class MainGame extends Phaser.Scene {
             this.startTimer = new Date().getTime();
         } else if (this.shiftKey.isDown) {
 
-            this.player.stats.boost = 3;
+            this.player.boost = 3;
             //console.log("pressing shift");
             this.player.play("player_boost", true);
         }
         else {
-            this.player.stats.boost = 0;
+            this.player.boost = 0;
 
             this.player.play("player_anim", true);
 
@@ -248,12 +252,8 @@ class MainGame extends Phaser.Scene {
     }
 
     makePlayer(x,y) {
-        var p = this.physics.add.sprite(x,y, "player").setOrigin(0.5);
-        p.stats = {
-            speed: 5,
-            boost: 0
-        };
-        p.scale = 2;
+        var p = new Player(this, x, y);
+        p.setOrigin(0.5);
 
 
         return p;
