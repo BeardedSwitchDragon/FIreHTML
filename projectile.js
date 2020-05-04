@@ -3,8 +3,8 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
 
         super(scene, x, y, name);
         this.speed = 100 + (speed * 20);
-        this.damageToDeal = 0;
-        this.rateOfFire = 0;
+        this.damageToDeal = damageToDeal;
+        this.rateOfFire = rateOfFire;
         this.x = x;
         this.y = y;
         this.begin = x;
@@ -54,6 +54,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
 class Peashooter extends Projectile {
     constructor(scene, x, y, isFlipped) {
         super(scene, 8, 5, 1, x, y, "peashooter", 400, isFlipped);
+        console.log(this.damageToDeal);
         console.log(this.body);
         this.play("peashooter_anim", true);
         console.log("playing anim");

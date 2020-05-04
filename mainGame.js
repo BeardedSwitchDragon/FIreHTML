@@ -142,7 +142,8 @@ class MainGame extends Phaser.Scene {
             console.log("collision is working");
             console.log(projectile.body);
             console.log(enemy.body);
-            enemy.destruct();
+            console.log(projectile.damageToDeal);
+            enemy.takeDamage(projectile.damageToDeal);
             projectile.destroy();
 
 
@@ -174,6 +175,7 @@ class MainGame extends Phaser.Scene {
     update() {
         if (this.testEnemy.body != undefined) {
             this.testEnemy.travel(this.player, this);
+            this.testEnemy.update();
     }
 
         let width = this.sys.canvas.width;
@@ -181,6 +183,8 @@ class MainGame extends Phaser.Scene {
         this.projectiles.getChildren().forEach(function(projectile) {
             projectile.update();
         });
+        //If testEnemy isn't 'falsey' it will run.
+
 
 
         this.mountain_bg.tilePositionX += 0.25;
@@ -237,7 +241,7 @@ class MainGame extends Phaser.Scene {
         }
         //console.log(this.cameras.main.scrollX + " + " + this.player.x);
         this.cameras.main.scrollX++;
-        this.player.x += 0.25;
+        //this.player.x += 0.25;
         this.sun.x++;
 
 
