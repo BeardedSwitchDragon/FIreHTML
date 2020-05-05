@@ -16,6 +16,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.y = y;
         this.scale = 2;
 
+        this.scene = scene;
+
     }
 
     boost() {
@@ -31,6 +33,21 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     takeDamage(damage) {
         this.health -= damage;
+    }
+
+    playIFrame(hasStarted) {
+        this.scene.tweens.add({
+            targets: this.scene.player,
+            alpha: 0.2,
+            ease: 'Cubic.easeOut',
+            onComplete: function() {
+                console.log("alalaCOMPLETEad;sda;d;as");
+                hasStarted = true;
+            },
+            duration: 50,
+            repeat: 3,
+            yoyo: true
+        });
     }
 
 }

@@ -53,7 +53,7 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
 
 class Peashooter extends Projectile {
     constructor(scene, x, y, isFlipped) {
-        super(scene, 8, 5, 1, x, y, "peashooter", 400, isFlipped);
+        super(scene, 8, 5, 0.5, x, y, "peashooter", 400, isFlipped);
         console.log(this.damageToDeal);
         console.log(this.body);
         this.play("peashooter_anim", true);

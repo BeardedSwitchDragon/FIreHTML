@@ -72,7 +72,6 @@ class MainGame extends Phaser.Scene {
         this.player = this.makePlayer(this.sys.canvas.width / 2, this.sys.canvas.height / 2);
         this.testEnemy = new Homikazee(this, this.sys.canvas.width * 1.25, this.sys.canvas.height/2);
 
-
         this.testEnemy.scale = 3;
 
 
@@ -80,7 +79,7 @@ class MainGame extends Phaser.Scene {
         this.projectiles = this.add.group();
 
         this.projectileROF = {
-            peashooter: 1000
+            peashooter: 500
 
         };
 
@@ -91,13 +90,23 @@ class MainGame extends Phaser.Scene {
         this.downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         this.commaKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.COMMA);
+
         this.startTimer = new Date().getTime();
+        this.startIFrames = new Date().getTime();
+        this.iFrames = 200;
+        var hasStarted = false;
+        this.invincible = false;
+
         this.anims.create({
             key: "player_anim",
             frames: this.anims.generateFrameNumbers("player"),
             frameRate: 14,
             repeat: -1
         });
+
+
+
+
 
         this.anims.create({
             key: "player_boost",
@@ -148,17 +157,24 @@ class MainGame extends Phaser.Scene {
 
 
         });
-        //console.log(this.player.body);
 
-        this.physics.add.collider(this.enemies, this.player, function(enemy, player) {
+        this.physics.add.overlap(this.enemies, this.player, function(enemy, player) {
 
             enemy.destruct();
             player.takeDamage(10);
             console.log(player.health);
-        })
+            if (hasStarted === false) {
+                hasStarted = true;
+                player.playIFrame(hasStarted);
+            }
+
+
+        });
         //console.log(this.player.body);
         this.player.play("player_anim");
         this.sun.play("sun_anim");
+
+        //this.player.playIFrame();
 
         //this.testEnemy.travel(this.player, this);
         //this.cameras.main.startFollow(this.player);
@@ -176,18 +192,32 @@ class MainGame extends Phaser.Scene {
     //     }
     // }
 
+
+
     update() {
         if (this.testEnemy.body != undefined) {
             this.testEnemy.travel(this.player, this);
             this.testEnemy.update();
-    }
+        }
+    console.log(this.invincible);
+
+    // if (this.invincible === true) {
+    //     if (this.hasStarted )
+    //     this.hasStarted = true;
+    //     if (this.iFrameTween.progress === 1) {
+    //         this.hasStarted;
+    //     }
+    //     console.log("progresss:  " + this.iFrameTween.progress);
+    //
+    //
+    // }
 
         let width = this.sys.canvas.width;
         let height = this.sys.canvas.height;
         this.projectiles.getChildren().forEach(function(projectile) {
             projectile.update();
         });
-        //If testEnemy isn't 'falsey' it will run.
+
 
 
 
@@ -245,7 +275,7 @@ class MainGame extends Phaser.Scene {
         }
         //console.log(this.cameras.main.scrollX + " + " + this.player.x);
         this.cameras.main.scrollX++;
-        //this.player.x += 0.25;
+        this.player.x++;
         this.sun.x++;
 
 
@@ -257,6 +287,13 @@ class MainGame extends Phaser.Scene {
 
 
         return p;
+    }
+
+    setInvincible() {
+        console.log("callled");
+        this.invincible = true;
+
+
     }
 
 
