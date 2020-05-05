@@ -96,6 +96,8 @@ class MainGame extends Phaser.Scene {
 
         var hasStarted = false;
 
+        this.startTimer = new Date().getTime();
+
 
 
         this.anims.create({
@@ -276,7 +278,7 @@ class MainGame extends Phaser.Scene {
 
 //README: THIS MUST BE THE LAST TEST (SHIFT TO BOOST)
         if (this.commaKey.isDown && (new Date().getTime() - this.startTimer > this.projectileROF.peashooter)) {
-
+            console.log("pressing down")
             this.shootProjectile();
             this.canShoot = false;
             this.startTimer = new Date().getTime();
@@ -319,7 +321,7 @@ class MainGame extends Phaser.Scene {
 
     shootProjectile() {
         let rateOfFire = 0;
-        const x = this.player.x;
+        const x = this.player.x + 20;
         const y = this.player.y;
         (this.player.flipX);
         let projectile = new Peashooter(this, x, y, this.player.flipX);
