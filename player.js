@@ -36,18 +36,22 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     playIFrame(hasStarted) {
-        this.scene.tweens.add({
+        console.log("adadadada");
+        return this.scene.tweens.add({
             targets: this.scene.player,
             alpha: 0.2,
             ease: 'Cubic.easeOut',
             onComplete: function() {
                 console.log("alalaCOMPLETEad;sda;d;as");
-                hasStarted = true;
+
             },
             duration: 50,
             repeat: 3,
             yoyo: true
         });
+        // if (this.iFrameTween.progress === 1) {
+        //     hasStarted = true;
+        // }
     }
 
 }

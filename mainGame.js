@@ -71,8 +71,10 @@ class MainGame extends Phaser.Scene {
         this.enemies = this.add.group();
         this.player = this.makePlayer(this.sys.canvas.width / 2, this.sys.canvas.height / 2);
         this.testEnemy = new Homikazee(this, this.sys.canvas.width * 1.25, this.sys.canvas.height/2);
+        this.secondEnemy = new Homikazee(this, this.sys.canvas.width * 1.5, this.sys.canvas.height * 0.75);
 
         this.testEnemy.scale = 3;
+        this.secondEnemy.scale = 3;
 
 
         this.canShoot = true;
@@ -162,10 +164,16 @@ class MainGame extends Phaser.Scene {
 
             enemy.destruct();
             player.takeDamage(10);
+
             console.log(player.health);
             if (hasStarted === false) {
+                this.iframe = player.playIFrame(hasStarted);
+                console.log("AAAAA " + this.iframe);
                 hasStarted = true;
-                player.playIFrame(hasStarted);
+            }
+
+            if (this.iframe.progress === 1) {
+                hasStarted = false;
             }
 
 
