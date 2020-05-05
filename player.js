@@ -15,8 +15,24 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.x = x;
         this.y = y;
         this.scale = 2;
+        this.isInvincible = false;
 
         this.scene = scene;
+
+        this.iFrame = this.scene.tweens.add({
+            targets: this.scene.player,
+            pause: true,
+            alpha: 0.2,
+            ease: 'Cubic.easeOut',
+            onComplete: function() {
+                this.isInvincible = false;
+                console.log("done");
+
+            },
+            duration: 50,
+            repeat: 3,
+            yoyo: true
+        });
 
     }
 
@@ -37,18 +53,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
 
     playIFrame(hasStarted) {
         console.log("adadadada");
-        return this.scene.tweens.add({
-            targets: this.scene.player,
-            alpha: 0.2,
-            ease: 'Cubic.easeOut',
-            onComplete: function() {
-                console.log("alalaCOMPLETEad;sda;d;as");
 
-            },
-            duration: 50,
-            repeat: 3,
-            yoyo: true
-        });
+        this.iFrame.play();
         // if (this.iFrameTween.progress === 1) {
         //     hasStarted = true;
         // }

@@ -1,4 +1,6 @@
 
+var playerIframe;
+
 var config = {
     type: Phaser.CANVAS,
     width: 800,

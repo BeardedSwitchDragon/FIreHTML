@@ -71,7 +71,7 @@ class MainGame extends Phaser.Scene {
         this.enemies = this.add.group();
         this.player = this.makePlayer(this.sys.canvas.width / 2, this.sys.canvas.height / 2);
         this.testEnemy = new Homikazee(this, this.sys.canvas.width * 1.25, this.sys.canvas.height/2);
-        this.secondEnemy = new Homikazee(this, this.sys.canvas.width * 1.5, this.sys.canvas.height * 0.75);
+        this.secondEnemy = new Homikazee(this, this.sys.canvas.width * 1.2, this.sys.canvas.height * 0.5);
 
         this.testEnemy.scale = 3;
         this.secondEnemy.scale = 3;
@@ -93,11 +93,10 @@ class MainGame extends Phaser.Scene {
         this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         this.commaKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.COMMA);
 
-        this.startTimer = new Date().getTime();
-        this.startIFrames = new Date().getTime();
-        this.iFrames = 200;
+
         var hasStarted = false;
-        this.invincible = false;
+
+
 
         this.anims.create({
             key: "player_anim",
@@ -150,10 +149,10 @@ class MainGame extends Phaser.Scene {
 
 
         this.physics.add.collider(this.projectiles, this.enemies, function(projectile, enemy) {
-            console.log("collision is working");
-            console.log(projectile.body);
-            console.log(enemy.body);
-            console.log(projectile.damageToDeal);
+            ("collision is working");
+            (projectile.body);
+            (enemy.body);
+            (projectile.damageToDeal);
             enemy.takeDamage(projectile.damageToDeal);
             projectile.destroy();
 
@@ -162,23 +161,30 @@ class MainGame extends Phaser.Scene {
 
         this.physics.add.overlap(this.enemies, this.player, function(enemy, player) {
 
-            enemy.destruct();
-            player.takeDamage(10);
+            if (player.isInvincible === false) {
+                enemy.destruct();
+                player.takeDamage(10);
+                player.isInvincible = true;
+            }
 
-            console.log(player.health);
+
+            (player.health);
             if (hasStarted === false) {
-                this.iframe = player.playIFrame(hasStarted);
-                console.log("AAAAA " + this.iframe);
+                player.playIFrame(hasStarted);
+
                 hasStarted = true;
             }
+            //console.log(this.iframe.progress);
 
-            if (this.iframe.progress === 1) {
-                hasStarted = false;
-            }
+            // if (this.iframe.progress === 1) {
+            //     hasStarted = false;
+            //     player.isInvincible = false;
+            // }
+
 
 
         });
-        //console.log(this.player.body);
+        //(this.player.body);
         this.player.play("player_anim");
         this.sun.play("sun_anim");
 
@@ -195,7 +201,7 @@ class MainGame extends Phaser.Scene {
     //             return false;
     //         }
     //         this.lastCall = new Date().now;
-    //         console.log(this.lastCall);
+    //         (this.lastCall);
     //     //do stuff
     //     }
     // }
@@ -207,7 +213,13 @@ class MainGame extends Phaser.Scene {
             this.testEnemy.travel(this.player, this);
             this.testEnemy.update();
         }
-    console.log(this.invincible);
+
+        if (this.player.iFrame.progress === 1) {
+            this.player.isInvincible = false;
+            hasStarted = false;
+        }
+        console.log(this.player.isInvincible);
+
 
     // if (this.invincible === true) {
     //     if (this.hasStarted )
@@ -215,7 +227,7 @@ class MainGame extends Phaser.Scene {
     //     if (this.iFrameTween.progress === 1) {
     //         this.hasStarted;
     //     }
-    //     console.log("progresss:  " + this.iFrameTween.progress);
+    //     ("progresss:  " + this.iFrameTween.progress);
     //
     //
     // }
@@ -238,7 +250,7 @@ class MainGame extends Phaser.Scene {
         if (this.rightKey.isDown) {
 
             this.player.moveX();
-            //console.log(this.player.stats.speed + this.player.stats.boost);
+            //(this.player.stats.speed + this.player.stats.boost);
             this.player.flipX = false;
 
         } else if (this.leftKey.isDown) {
@@ -264,14 +276,14 @@ class MainGame extends Phaser.Scene {
 
 //README: THIS MUST BE THE LAST TEST (SHIFT TO BOOST)
         if (this.commaKey.isDown && (new Date().getTime() - this.startTimer > this.projectileROF.peashooter)) {
-            console.log("adsdads")
+
             this.shootProjectile();
             this.canShoot = false;
             this.startTimer = new Date().getTime();
         } else if (this.shiftKey.isDown) {
 
             this.player.boost = 3;
-            //console.log("pressing shift");
+            //("pressing shift");
             this.player.play("player_boost", true);
         }
         else {
@@ -281,7 +293,7 @@ class MainGame extends Phaser.Scene {
 
 
         }
-        //console.log(this.cameras.main.scrollX + " + " + this.player.x);
+        //(this.cameras.main.scrollX + " + " + this.player.x);
         this.cameras.main.scrollX++;
         this.player.x++;
         this.sun.x++;
@@ -298,7 +310,7 @@ class MainGame extends Phaser.Scene {
     }
 
     setInvincible() {
-        console.log("callled");
+        ("callled");
         this.invincible = true;
 
 
@@ -309,11 +321,11 @@ class MainGame extends Phaser.Scene {
         let rateOfFire = 0;
         const x = this.player.x;
         const y = this.player.y;
-        console.log(this.player.flipX);
+        (this.player.flipX);
         let projectile = new Peashooter(this, x, y, this.player.flipX);
-        //console.log(this.enemies.getChildren());
+        //(this.enemies.getChildren());
         this.physics.add.sprite(projectile);
-        //console.log(this.player.x);
+        //(this.player.x);
     }
 
 

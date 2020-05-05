@@ -40,6 +40,7 @@ class Homikazee extends Enemy {
 
     destruct() {
         console.log(this.body);
+        this.body = null;
         this.play("explosion_anim", true);
         console.log("animation worked");
         this.on("animationcomplete", this.destroy);
