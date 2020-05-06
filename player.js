@@ -52,8 +52,8 @@ class Player extends Phaser.Physics.Arcade.Sprite {
                 console.log("done");
 
             },
-            duration: 50,
-            repeat: 3,
+            duration: 100,
+            repeat: 5,
             yoyo: true
         });
         // if (this.iFrameTween.progress === 1) {

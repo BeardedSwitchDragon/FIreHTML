@@ -6,6 +6,8 @@ class MainGame extends Phaser.Scene {
     }
 
     preload() {
+        this.load.bitmapFont("pixelFont", "assets/font/font.png", "assets/font/font.xml");
+
         this.load.spritesheet("player", "assets/alienSpritesheet.png", {
             frameWidth: 32,
             frameHeight: 32
@@ -57,6 +59,7 @@ class MainGame extends Phaser.Scene {
         this.ground_bg = this.add.tileSprite(0.5, 0.5, game.config.width, GROUND_HEIGHT, "ground_bg");
         //this.ground_bg.flipY = true;
 
+
         this.ground_bg.setOrigin(0,0);
         this.ground_bg.setScrollFactor(0);
 
@@ -84,6 +87,10 @@ class MainGame extends Phaser.Scene {
             peashooter: 500
 
         };
+
+        this.playerHealthLabel = this.add.bitmapText(game.config.width * 0.1, game.config.height * 0.8, "pixelFont", "hp: " + this.player.health, 50);
+        this.playerHealthLabel.setDepth(10);
+
 
         //input keys
         this.leftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
@@ -212,15 +219,13 @@ class MainGame extends Phaser.Scene {
 
 
     update() {
-        if (this.testEnemy.body != undefined) {
-            this.testEnemy.travel(this.player, this);
-            this.testEnemy.update();
-        }
+
 
         if (this.player.iFrame != undefined && this.player.iFrame.progress === 1) {
             this.player.isInvincible = false;
         }
         console.log(this.player.isInvincible);
+        this.playerHealthLabel.text = "hp: " + this.player.health;
 
 
     // if (this.invincible === true) {
@@ -239,6 +244,10 @@ class MainGame extends Phaser.Scene {
         this.projectiles.getChildren().forEach(function(projectile) {
             projectile.update();
         });
+
+        for (var enemyIndex = 0; enemyIndex < this.enemies.getChildren().length; enemyIndex++) {
+            this.updateEnemies(this.enemies.getChildren()[enemyIndex]);
+        }
 
 
 
@@ -299,6 +308,7 @@ class MainGame extends Phaser.Scene {
         this.cameras.main.scrollX++;
         this.player.x++;
         this.sun.x++;
+        this.playerHealthLabel.x++;
 
 
     }
@@ -316,6 +326,13 @@ class MainGame extends Phaser.Scene {
         this.invincible = true;
 
 
+    }
+
+    updateEnemies(enemy) {
+        if (enemy.body != undefined) {
+            enemy.travel(this.player, this);
+            enemy.update();
+        }
     }
 
 
