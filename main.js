@@ -26,7 +26,7 @@ var config = {
 //             shootProjectile: shootProjectile
 //         }
 //     }
-    scene: [Intro, MainGame]
+    scene: [BootScene, LoadingScene, Intro, MainGame]
 };
 
 var game = new Phaser.Game(config);

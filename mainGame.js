@@ -5,39 +5,7 @@ class MainGame extends Phaser.Scene {
 
     }
 
-    preload() {
-        this.load.bitmapFont("pixelFont", "assets/font/font.png", "assets/font/font.xml");
-
-        this.load.spritesheet("player", "assets/alienSpritesheet.png", {
-            frameWidth: 32,
-            frameHeight: 32
-        });
-        this.load.spritesheet("player_boosting", "assets/alienSpritesheetBoost.png", {
-            frameWidth: 32,
-            frameHeight: 32
-        });
-        this.load.spritesheet("peashooter", "assets/peaShootSpritesheet.png", {
-            frameWidth: 32,
-            frameHeight: 13
-        });
-        this.load.image("ground_bg", "assets/furtherBG.png");
-        this.load.image("mountain_bg", "assets/mountain.png");
-        //this.load.image("cloud_bg", "assets/cloud.png");
-
-        this.load.spritesheet("sun", "assets/sunSpritesheet.png", {
-            frameWidth: 16,
-            frameHeight: 16
-        });
-
-        this.load.spritesheet("homikazee", "assets/homikazeeSpritesheet.png", {
-            frameWidth: 32,
-            frameHeight: 17
-        });
-        this.load.spritesheet("explosion", "assets/explosionSpritesheet.png", {
-            frameWidth: 32,
-            frameHeight: 32
-        });
-    }
+    
 
 
 
@@ -69,7 +37,7 @@ class MainGame extends Phaser.Scene {
         this.sun.setOrigin(0,0);
         this.sun.scale = 3;
 
-        
+
 
         // this.mountain_bg.tileScaleX = 1.1;
         // this.mountain_bg.tileScaleY = 1.1;
