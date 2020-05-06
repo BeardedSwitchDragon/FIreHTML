@@ -11,8 +11,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         this.y = y;
         this.damageToDeal = damageToDeal;
         this.health = health;
-        console.log(this.body);
-        console.log("spawned enemy");
+        (this.body);
+
 
     }
 }
@@ -21,7 +21,7 @@ class Homikazee extends Enemy {
     constructor(scene, x, y) {
         super(scene,x,y, "homikazee", 5, 6);
         this.speed = 100;
-        console.log("created");
+        
 
     }
 
@@ -39,15 +39,15 @@ class Homikazee extends Enemy {
     }
 
     destruct() {
-        console.log(this.body);
+        (this.body);
         this.body = null;
         this.play("explosion_anim", true);
-        console.log("animation worked");
+        ("animation worked");
         this.on("animationcomplete", this.destroy);
     }
 
     update() {
-        console.log(this.health);
+        (this.health);
         if (this.health <= 0) {
             this.destruct();
         }

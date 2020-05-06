@@ -1,5 +1,7 @@
 
-var playerIframe;
+
+
+
 
 var config = {
     type: Phaser.CANVAS,
@@ -28,6 +30,8 @@ var config = {
 };
 
 var game = new Phaser.Game(config);
+
+
 
 // var player;
 // var leftKey;

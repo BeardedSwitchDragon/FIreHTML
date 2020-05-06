@@ -39,6 +39,8 @@ class MainGame extends Phaser.Scene {
         });
     }
 
+
+
     create() {
         const GROUND_HEIGHT = game.config.height * 3;
         this.cameras.main.setBackgroundColor("#F2C0A2");
@@ -67,6 +69,7 @@ class MainGame extends Phaser.Scene {
         this.sun.setOrigin(0,0);
         this.sun.scale = 3;
 
+        
 
         // this.mountain_bg.tileScaleX = 1.1;
         // this.mountain_bg.tileScaleY = 1.1;
@@ -184,7 +187,7 @@ class MainGame extends Phaser.Scene {
             //
             //     hasStarted = true;
             // }
-            //console.log(this.iframe.progress);
+            //(this.iframe.progress);
 
             // if (this.iframe.progress === 1) {
             //     hasStarted = false;
@@ -224,7 +227,7 @@ class MainGame extends Phaser.Scene {
         if (this.player.iFrame != undefined && this.player.iFrame.progress === 1) {
             this.player.isInvincible = false;
         }
-        console.log(this.player.isInvincible);
+        //console.log(this.player.isInvincible);
         this.playerHealthLabel.text = "hp: " + this.player.health;
 
 
@@ -287,7 +290,7 @@ class MainGame extends Phaser.Scene {
 
 //README: THIS MUST BE THE LAST TEST (SHIFT TO BOOST)
         if (this.commaKey.isDown && (new Date().getTime() - this.startTimer > this.projectileROF.peashooter)) {
-            console.log("pressing down")
+            ("pressing down")
             this.shootProjectile();
             this.canShoot = false;
             this.startTimer = new Date().getTime();
