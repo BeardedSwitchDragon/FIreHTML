@@ -166,16 +166,17 @@ class MainGame extends Phaser.Scene {
             if (player.isInvincible === false) {
                 enemy.destruct();
                 player.takeDamage(10);
-                player.isInvincible = true;
-            }
-
-
-            (player.health);
-            if (hasStarted === false) {
                 player.playIFrame(hasStarted);
+                player.isInvincible = true;
 
-                hasStarted = true;
             }
+
+
+            // if (hasStarted === false) {
+            //
+            //
+            //     hasStarted = true;
+            // }
             //console.log(this.iframe.progress);
 
             // if (this.iframe.progress === 1) {
@@ -216,9 +217,8 @@ class MainGame extends Phaser.Scene {
             this.testEnemy.update();
         }
 
-        if (this.player.iFrame.progress === 1) {
+        if (this.player.iFrame != undefined && this.player.iFrame.progress === 1) {
             this.player.isInvincible = false;
-            hasStarted = false;
         }
         console.log(this.player.isInvincible);
 
