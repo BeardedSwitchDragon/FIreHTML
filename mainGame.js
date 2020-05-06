@@ -6,6 +6,8 @@ class MainGame extends Phaser.Scene {
     }
 
     preload() {
+        this.load.script('webfont', '//ajax.googleapis.com/ajax/libs/webfont/1.4.7/webfont.js');
+
         this.load.spritesheet("player", "assets/alienSpritesheet.png", {
             frameWidth: 32,
             frameHeight: 32
@@ -37,6 +39,12 @@ class MainGame extends Phaser.Scene {
         });
     }
 
+    createText() {
+        this.playerHealthLabel = this.add.text(this.sys.canvas.width * 0.5, this.sys.canvas.height * 0.5, "loading...");
+        this.font = "VT323";
+        this.add.existing(this.playerHealthLabel);
+    }
+
     create() {
         const GROUND_HEIGHT = game.config.height * 3;
         this.cameras.main.setBackgroundColor("#F2C0A2");
@@ -64,6 +72,7 @@ class MainGame extends Phaser.Scene {
         this.sun.setOrigin(0,0);
         this.sun.scale = 3;
 
+        this.createText();
 
         // this.mountain_bg.tileScaleX = 1.1;
         // this.mountain_bg.tileScaleY = 1.1;
@@ -177,7 +186,7 @@ class MainGame extends Phaser.Scene {
             //
             //     hasStarted = true;
             // }
-            //console.log(this.iframe.progress);
+            //(this.iframe.progress);
 
             // if (this.iframe.progress === 1) {
             //     hasStarted = false;
@@ -220,7 +229,7 @@ class MainGame extends Phaser.Scene {
         if (this.player.iFrame != undefined && this.player.iFrame.progress === 1) {
             this.player.isInvincible = false;
         }
-        console.log(this.player.isInvincible);
+        (this.player.health);
 
 
     // if (this.invincible === true) {
@@ -278,7 +287,7 @@ class MainGame extends Phaser.Scene {
 
 //README: THIS MUST BE THE LAST TEST (SHIFT TO BOOST)
         if (this.commaKey.isDown && (new Date().getTime() - this.startTimer > this.projectileROF.peashooter)) {
-            console.log("pressing down")
+            ("pressing down")
             this.shootProjectile();
             this.canShoot = false;
             this.startTimer = new Date().getTime();

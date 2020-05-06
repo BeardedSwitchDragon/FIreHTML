@@ -40,7 +40,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     playIFrame(hasStarted) {
-        console.log("adadadada");
+        ("adadadada");
 
         this.iFrame = this.scene.tweens.add({
             targets: this.scene.player,
@@ -49,7 +49,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
             ease: 'Cubic.easeOut',
             onComplete: function() {
                 this.isInvincible = false;
-                console.log("done");
+                ("done");
 
             },
             duration: 50,
