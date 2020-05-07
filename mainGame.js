@@ -53,6 +53,7 @@ class MainGame extends Phaser.Scene {
 
         this.canShoot = true;
         this.projectiles = this.add.group();
+        this.powerups = this.add.group();
 
         this.projectileROF = {
             peashooter: 500,
@@ -219,10 +220,14 @@ class MainGame extends Phaser.Scene {
             this.shootProjectile("peashooter");
             this.canShoot = false;
             this.peaTimer = new Date().getTime();
-        } else if (this.periodKey.isDown && (new Date().getTime() - this.shotTimer > this.projectileROF.shotgun)) {
-            this.shootProjectile("shotgun");
-            this.canShoot = false;
-            this.shotTimer = new Date().getTime();
+        } else if (this.periodKey.isDown) {
+            if (this.player.availableWeapons.shotgun === true) {
+                this.shootProjectile("shotgun");
+            } else if (this.player.availableWeapons.machineGun === true) {
+                this.shootProjectile("machineGun");
+            } else if (this.player.availableWeapons.locker === true) {
+                this.shootProjectile("locker");
+            }
         } else if (this.shiftKey.isDown) {
 
             this.player.boost = 3;
@@ -279,11 +284,16 @@ class MainGame extends Phaser.Scene {
 
             break;
             case "shotgun":
-            for (var trajectory = 0; trajectory <= 2; trajectory++) {
-                console.log(trajectory);
-                projectile = new Shotgun(this, x, y, this.player.flipX, trajectory);
+            if (new Date().getTime() - this.shotTimer > this.projectileROF.shotgun) {
+                for (var trajectory = 0; trajectory <= 2; trajectory++) {
+                    console.log(trajectory);
+                    projectile = new Shotgun(this, x, y, this.player.flipX, trajectory);
 
+                }
+                this.canShoot = false;
+                this.shotTimer = new Date().getTime();
             }
+
 
             break;
             default:

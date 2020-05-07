@@ -17,6 +17,13 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.y = y;
         this.scale = 2;
         this.isInvincible = false;
+        this.availableWeapons = {
+            peashooter: true,
+            shotgun: false,
+            machineGun: false,
+            lockers: false
+        };
+        //Lockers: lock on to enemy and freeze them
 
         this.scene = scene;
         this.iFrame;

@@ -69,6 +69,11 @@ class LoadingScene extends Phaser.Scene {
             frameWidth: 32,
             frameHeight: 32
         });
+        this.load.spritesheet("shotgun_powerup", "assets/shotgunPwp.png", {
+            frameWidth: 32,
+            frameHeight: 32
+
+        });
 
         //ANIMATIONS:
 
@@ -98,7 +103,7 @@ class LoadingScene extends Phaser.Scene {
             frameRate: 14,
             repeat: -1
         });
-        
+
         this.anims.create({
             key: "player_boost",
             frames: this.anims.generateFrameNumbers("player_boosting"),
@@ -113,6 +118,12 @@ class LoadingScene extends Phaser.Scene {
             repeat: -1
 
         });
+        this.anims.create({
+            key: "shotgun_powerup_anim",
+            frames: this.anims.generateFrameNumbers("shotgun_powerup"),
+            frameRate: 12,
+            repeat: -1
+        })
 
         this.anims.create({
             key: "sun_anim",
