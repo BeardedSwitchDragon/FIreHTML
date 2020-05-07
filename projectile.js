@@ -1,49 +1,55 @@
 class Projectile extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, speed, damageToDeal, rateOfFire, x, y, name, life, isFlipped) {
+    constructor(scene, speed, damageToDeal, x, y, name, life, isFlipped) {
 
         super(scene, x, y, name);
         this.speed = 100 + (speed * 20);
         this.damageToDeal = damageToDeal;
-        this.rateOfFire = rateOfFire;
+        // this.rateOfFire = rateOfFire;
         this.x = x;
         this.y = y;
         this.begin = x;
-        console.log(this.x);
+        this.life = life;
+        this.name = name;
+        this.flipX = isFlipped;
         scene.add.sprite(this);
         scene.projectiles.add(this);
         scene.add.existing(this);
         scene.physics.world.enableBody(this);
-        this.flipX = isFlipped;
 
-        console.log(this.flipX);
+
+
+        (this.flipX);
         if (this.flipX) {
             this.speed *= -1;
-            console.log("lolol");
+
         }
-        //console.log(this.body);
+        //(this.body);
         this.body.velocity.x = this.speed;
 
-        console.log("spawned");
+
 
 
     }
 
     update() {
-        if (this.x - this.begin > this.life) {
+        console.log(this.life);
+        if (((this.x - this.begin) > this.life) || ((this.x - this.begin) < (-this.life))) {
+            console.log("aadadadadsdoooooo");
             this.destroy();
+
         }
     }
 
     // shoot() {
-    //     console.log(this.x);
+    //     (this.x);
     //     var timer = window.setTimeout(function() {
-    //         console.log(this.x);
+    //         (this.x);
     //         while (this.x < 800) {
     //
     //             this.x += this.speed;
-    //             console.log("goiiing")
+    //             ("goiiing")
     //         }
-    //         //console.log(this.x);
+    //         //(this.x);
     //     }, (this.rateOfFire * 1000));
     //     // window.clearTimeout(timer);
     // }
@@ -53,10 +59,14 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
 
 class Peashooter extends Projectile {
     constructor(scene, x, y, isFlipped) {
-        super(scene, 8, 5, 0.5, x, y, "peashooter", 400, isFlipped);
-        console.log(this.damageToDeal);
-        console.log(this.body);
+        super(scene, 8, 5, x, y, "peashooter", 400, isFlipped);
         this.play("peashooter_anim", true);
-        console.log("playing anim");
+    }
+}
+
+class Shotgun extends Projectile {
+    constructor(scene, x, y, isFlipped) {
+        super(scene, 4, 10, x, y, "shotgun", 150, isFlipped);
+        this.play("shotgun_anim", true);
     }
 }

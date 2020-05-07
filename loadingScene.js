@@ -40,9 +40,16 @@ class LoadingScene extends Phaser.Scene {
             frameWidth: 32,
             frameHeight: 32
         });
+
+
         this.load.spritesheet("peashooter", "assets/peaShootSpritesheet.png", {
             frameWidth: 32,
             frameHeight: 13
+        });
+
+        this.load.spritesheet("shotgun", "assets/shotgunSpritesheet.png", {
+            frameWidth: 32,
+            frameHeight: 32
         });
         this.load.image("ground_bg", "assets/furtherBG.png");
         this.load.image("mountain_bg", "assets/mountain.png");
@@ -63,6 +70,14 @@ class LoadingScene extends Phaser.Scene {
             frameHeight: 32
         });
 
+        //ANIMATIONS:
+
+
+        ("lolll");
+
+
+
+
 
         this.load.on("progress", (value) => {
             this.loadingBarFill.fillStyle(0xffffff, 1);
@@ -77,6 +92,58 @@ class LoadingScene extends Phaser.Scene {
     }
 
     create() {
+        this.anims.create({
+            key: "player_anim",
+            frames: this.anims.generateFrameNumbers("player"),
+            frameRate: 14,
+            repeat: -1
+        });
+        
+        this.anims.create({
+            key: "player_boost",
+            frames: this.anims.generateFrameNumbers("player_boosting"),
+            frameRate: 14,
+            repeat: -1
+
+        });
+        this.anims.create({
+            key: "peashooter_anim",
+            frames: this.anims.generateFrameNumbers("peashooter"),
+            frameRate: 12,
+            repeat: -1
+
+        });
+
+        this.anims.create({
+            key: "sun_anim",
+            frames: this.anims.generateFrameNumbers("sun"),
+            frameRate: 2,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "explosion_anim",
+            frames: this.anims.generateFrameNumbers("explosion"),
+            frameRate: 12,
+            repeat: 0,
+            hideOnComplete: true
+        });
+
+        this.anims.create({
+            key: "homikazee_anim",
+            frames: this.anims.generateFrameNumbers("homikazee"),
+            frameRate: 12,
+            repeat: -1
+        });
+        ("chungus");
+
+        this.anims.create({
+            key: "shotgun_anim",
+            frames: this.anims.generateFrameNumbers("shotgun"),
+            frameRate: 11,
+            repeat: -1
+        });
+
         this.scene.start("introScene");
     }
 

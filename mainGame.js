@@ -5,7 +5,7 @@ class MainGame extends Phaser.Scene {
 
     }
 
-    
+
 
 
 
@@ -55,7 +55,8 @@ class MainGame extends Phaser.Scene {
         this.projectiles = this.add.group();
 
         this.projectileROF = {
-            peashooter: 500
+            peashooter: 500,
+            shotgun: 750
 
         };
 
@@ -70,61 +71,17 @@ class MainGame extends Phaser.Scene {
         this.downKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         this.commaKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.COMMA);
+        this.periodKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.PERIOD);
 
 
         var hasStarted = false;
 
-        this.startTimer = new Date().getTime();
-
-
-
-        this.anims.create({
-            key: "player_anim",
-            frames: this.anims.generateFrameNumbers("player"),
-            frameRate: 14,
-            repeat: -1
-        });
+        this.peaTimer = new Date().getTime();
+        this.shotTimer = new Date().getTime();
 
 
 
 
-
-        this.anims.create({
-            key: "player_boost",
-            frames: this.anims.generateFrameNumbers("player_boosting"),
-            frameRate: 14,
-            repeat: -1
-
-        });
-        this.anims.create({
-            key: "peashooter_anim",
-            frames: this.anims.generateFrameNumbers("peashooter"),
-            frameRate: 12,
-            repeat: -1
-
-        });
-
-        this.anims.create({
-            key: "sun_anim",
-            frames: this.anims.generateFrameNumbers("sun"),
-            frameRate: 2,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: "explosion_anim",
-            frames: this.anims.generateFrameNumbers("explosion"),
-            frameRate: 12,
-            repeat: 0,
-            hideOnComplete: true
-        });
-
-        this.anims.create({
-            key: "homikazee_anim",
-            frames: this.anims.generateFrameNumbers("homikazee"),
-            frameRate: 12,
-            repeat: -1
-        });
         this.testEnemy.play("homikazee_anim");
 
 
@@ -195,7 +152,7 @@ class MainGame extends Phaser.Scene {
         if (this.player.iFrame != undefined && this.player.iFrame.progress === 1) {
             this.player.isInvincible = false;
         }
-        //console.log(this.player.isInvincible);
+        //(this.player.isInvincible);
         this.playerHealthLabel.text = "hp: " + this.player.health;
 
 
@@ -213,6 +170,7 @@ class MainGame extends Phaser.Scene {
         let width = this.sys.canvas.width;
         let height = this.sys.canvas.height;
         this.projectiles.getChildren().forEach(function(projectile) {
+            console.log(projectile.name);
             projectile.update();
         });
 
@@ -257,11 +215,15 @@ class MainGame extends Phaser.Scene {
             }
 
 //README: THIS MUST BE THE LAST TEST (SHIFT TO BOOST)
-        if (this.commaKey.isDown && (new Date().getTime() - this.startTimer > this.projectileROF.peashooter)) {
-            ("pressing down")
-            this.shootProjectile();
+        if (this.commaKey.isDown && (new Date().getTime() - this.peaTimer > this.projectileROF.peashooter)) {
+
+            this.shootProjectile("peashooter");
             this.canShoot = false;
-            this.startTimer = new Date().getTime();
+            this.peaTimer = new Date().getTime();
+        } else if (this.periodKey.isDown && (new Date().getTime() - this.shotTimer > this.projectileROF.shotgun)) {
+            this.shootProjectile("shotgun");
+            this.canShoot = false;
+            this.shotTimer = new Date().getTime();
         } else if (this.shiftKey.isDown) {
 
             this.player.boost = 3;
@@ -272,8 +234,6 @@ class MainGame extends Phaser.Scene {
             this.player.boost = 0;
 
             this.player.play("player_anim", true);
-
-
         }
         //(this.cameras.main.scrollX + " + " + this.player.x);
         this.cameras.main.scrollX++;
@@ -307,12 +267,25 @@ class MainGame extends Phaser.Scene {
     }
 
 
-    shootProjectile() {
+    shootProjectile(projectile_name) {
         let rateOfFire = 0;
         const x = this.player.x + 20;
         const y = this.player.y;
         (this.player.flipX);
-        let projectile = new Peashooter(this, x, y, this.player.flipX);
+        let projectile;
+
+        switch (projectile_name) {
+            case "peashooter":
+            projectile = new Peashooter(this, x, y, this.player.flipX);
+
+            break;
+            case "shotgun":
+            projectile = new Shotgun(this, x, y, this.player.flipX);
+            break;
+            default:
+                ("gun not found");
+
+        }
         //(this.enemies.getChildren());
         this.physics.add.sprite(projectile);
         //(this.player.x);
