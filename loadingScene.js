@@ -46,6 +46,7 @@ class LoadingScene extends Phaser.Scene {
         });
         this.load.image("ground_bg", "assets/furtherBG.png");
         this.load.image("mountain_bg", "assets/mountain.png");
+        this.load.image("logo", "assets/fireLogo.png");
         //this.load.image("cloud_bg", "assets/cloud.png");
 
         this.load.spritesheet("sun", "assets/sunSpritesheet.png", {
@@ -62,6 +63,7 @@ class LoadingScene extends Phaser.Scene {
             frameHeight: 32
         });
 
+
         this.load.on("progress", (value) => {
             this.loadingBarFill.fillStyle(0xffffff, 1);
             this.loadingBarFill.fillRect(250, 285, 300 * value, 30);
@@ -75,7 +77,7 @@ class LoadingScene extends Phaser.Scene {
     }
 
     create() {
-        this.scene.start("Intro");
+        this.scene.start("introScene");
     }
 
 

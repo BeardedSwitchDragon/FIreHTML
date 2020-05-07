@@ -7,6 +7,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         scene.add.sprite(this);
         scene.physics.add.sprite(this);
         scene.physics.world.enableBody(this);
+        this.body.isCircle = true;
         scene.add.existing(this);
 
         this.health = 50;
