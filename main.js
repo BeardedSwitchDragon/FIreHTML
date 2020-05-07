@@ -1,7 +1,7 @@
 
 
 
-
+//BIIIG thanks to KingCosmic & samme on discord for helping me solve a bunch of bugs
 
 var config = {
     type: Phaser.CANVAS,

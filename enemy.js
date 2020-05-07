@@ -7,11 +7,12 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.world.enableBody(this);
         scene.physics.add.sprite(this);
+        this.setOrigin(0.5, 0.5);
         this.x = x;
         this.y = y;
         this.damageToDeal = damageToDeal;
         this.health = health;
-        (this.body);
+
 
 
     }
@@ -21,17 +22,25 @@ class Homikazee extends Enemy {
     constructor(scene, x, y) {
         super(scene,x,y, "homikazee", 5, 6);
         this.speed = 100;
-        
+        this.flipY = true;
+        this.flipX = true;
+
 
     }
 
     travel(target, scene) {
+        this.currentPoint = new Phaser.Geom.Point(this.x, this.y);
+        this.pointToMoveTo = new Phaser.Geom.Point(this.x, this.y);
         scene.physics.moveToObject(this, target, this.speed);
-        if ((this.x - target.x) < 0) {
-            this.flipX = true;
-        } else {
-            this.flipX = false;
-        }
+        // if ((this.x - target.x) < 0) {
+        //     this.flipX = true;
+        // } else {
+        //     this.flipX = false;
+        // }
+        //
+        this.rotation = Phaser.Math.Angle.Between(this.x, this.y, target.x, target.y);
+        
+
     }
 
     takeDamage(damage) {

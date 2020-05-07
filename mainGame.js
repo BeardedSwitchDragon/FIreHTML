@@ -73,7 +73,6 @@ class MainGame extends Phaser.Scene {
         this.commaKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.COMMA);
         this.periodKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.PERIOD);
 
-
         var hasStarted = false;
 
         this.peaTimer = new Date().getTime();
@@ -280,7 +279,12 @@ class MainGame extends Phaser.Scene {
 
             break;
             case "shotgun":
-            projectile = new Shotgun(this, x, y, this.player.flipX);
+            for (var trajectory = 0; trajectory <= 2; trajectory++) {
+                console.log(trajectory);
+                projectile = new Shotgun(this, x, y, this.player.flipX, trajectory);
+
+            }
+
             break;
             default:
                 ("gun not found");

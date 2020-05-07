@@ -18,6 +18,8 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
 
 
 
+
+
         (this.flipX);
         if (this.flipX) {
             this.speed *= -1;
@@ -32,9 +34,8 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-        console.log(this.life);
         if (((this.x - this.begin) > this.life) || ((this.x - this.begin) < (-this.life))) {
-            console.log("aadadadadsdoooooo");
+
             this.destroy();
 
         }
@@ -65,8 +66,15 @@ class Peashooter extends Projectile {
 }
 
 class Shotgun extends Projectile {
-    constructor(scene, x, y, isFlipped) {
-        super(scene, 4, 10, x, y, "shotgun", 150, isFlipped);
+    constructor(scene, x, y, isFlipped, bulletNumber) {
+        super(scene, 4, 10, x, y, "shotgun", 300, isFlipped);
+        this.setFriction(0.1);
         this.play("shotgun_anim", true);
+        console.log(bulletNumber);
+        this.body.velocity.y =  50 * (bulletNumber - 1);
+
+
     }
+
+
 }
