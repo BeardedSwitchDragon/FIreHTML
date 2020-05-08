@@ -61,6 +61,8 @@ class MainGame extends Phaser.Scene {
 
         };
 
+        this.testPowerup = new ShotgunPowerup(this, game.config.width * 1.2, this.sys.canvas.height / 2);
+
         this.playerHealthLabel = this.add.bitmapText(game.config.width * 0.1, game.config.height * 0.8, "pixelFont", "hp: " + this.player.health, 50);
         this.playerHealthLabel.setDepth(10);
 
@@ -122,6 +124,26 @@ class MainGame extends Phaser.Scene {
 
 
         });
+
+        this.physics.add.overlap(this.player, this.powerups, function(player, powerup) {
+            powerup.destroy();
+            console.log(powerup.name);
+            switch (powerup.name) {
+                case "shotgun_powerup":
+                player.availableWeapons.shotgun = true;
+                break;
+                case "machinegun_powerup":
+                player.availableWeapons.machineGun = true;
+                break;
+                case "locker":
+                player.availableWeapons.locker = true;
+                break;
+
+                default:
+                console.log("Weapon unavailable");
+
+            }
+        })
         //(this.player.body);
         this.player.play("player_anim");
         this.sun.play("sun_anim");

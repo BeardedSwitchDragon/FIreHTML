@@ -69,7 +69,7 @@ class LoadingScene extends Phaser.Scene {
             frameWidth: 32,
             frameHeight: 32
         });
-        this.load.spritesheet("shotgun_powerup", "assets/shotgunPwp.png", {
+        this.load.spritesheet("shotgun_powerup", "assets/shotgunPwpSpritesheet.png", {
             frameWidth: 32,
             frameHeight: 32
 
@@ -146,7 +146,7 @@ class LoadingScene extends Phaser.Scene {
             frameRate: 12,
             repeat: -1
         });
-        ("chungus");
+
 
         this.anims.create({
             key: "shotgun_anim",

@@ -72,6 +72,7 @@ class Shotgun extends Projectile {
         this.play("shotgun_anim", true);
         console.log(bulletNumber);
         this.body.velocity.y =  50 * (bulletNumber - 1);
+        
 
 
     }

@@ -7,13 +7,16 @@ class Powerup extends Phaser.Physics.Arcade.Sprite {
         scene.powerups.add(this);
         scene.add.existing(this);
         scene.physics.world.enableBody(this);
-
+        
+        this.texture = name;
         this.name = name;
     }
 }
 class ShotgunPowerup extends Powerup {
     constructor(scene, x, y) {
         super(scene, x, y, "shotgun_powerup");
+        this.scale = 2;
         this.play("shotgun_powerup_anim");
+
     }
 }
