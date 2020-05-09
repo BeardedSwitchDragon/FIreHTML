@@ -2,13 +2,14 @@
 
 
 //BIIIG thanks to KingCosmic & samme on discord for helping me solve a bunch of bugs
-
+const GAMEWIDTH = window.innerWidth - 200;
+const GAMEHEIGHT = 600;
 var config = {
-    type: Phaser.CANVAS,
-    width: 800,
-    height: 600,
+    type: Phaser.AUTO,
+    width: GAMEWIDTH,
+    height: GAMEHEIGHT,
     pixelArt: true,
-    zoom: 2,
+    // zoom: 2,
 //     scene: {
 //         preload: preload,
 //         create: create,
@@ -26,12 +27,12 @@ var config = {
 //             shootProjectile: shootProjectile
 //         }
 //     }
-    scene: [BootScene, LoadingScene, Intro, MainGame]
+    scene: [BootScene, LoadingScene, Intro, MainGame],
+    canvas: document.querySelector("game")
 };
 
+
 var game = new Phaser.Game(config);
-
-
 
 // var player;
 // var leftKey;

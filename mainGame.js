@@ -10,14 +10,14 @@ class MainGame extends Phaser.Scene {
 
 
     create() {
-        const GROUND_HEIGHT = game.config.height * 3;
+        const GROUND_HEIGHT = GAMEHEIGHT * 3;
         this.cameras.main.setBackgroundColor("#F2C0A2");
 
         // this.clouds = this.add.tileSprite(0,0, game.config.width, GROUND_HEIGHT, "cloud_bg");
         // this.clouds.setOrigin(0,0);
         // //this.clouds.setScale(5,5);
         // this.clouds.tilePositionX = game.config.width / 2;
-        // this.clouds.tilePositionY = game.config.height / 2;
+        // this.clouds.tilePositionY = GAMEHEIGHT / 2;
 
 
         this.mountain_bg = this.add.tileSprite(0, 0, game.config.width, GROUND_HEIGHT, "mountain_bg");
@@ -43,9 +43,9 @@ class MainGame extends Phaser.Scene {
         // this.mountain_bg.tileScaleY = 1.1;
         //this.mountain_bg.setSize(game.config.width, GROUND_HEIGHT);
         this.enemies = this.add.group();
-        this.player = this.makePlayer(this.sys.canvas.width / 2, this.sys.canvas.height / 2);
-        this.testEnemy = new Homikazee(this, this.sys.canvas.width * 1.25, this.sys.canvas.height/2);
-        this.secondEnemy = new Homikazee(this, this.sys.canvas.width * 1.2, this.sys.canvas.height * 0.5);
+        this.player = this.makePlayer(GAMEWIDTH / 2, GAMEHEIGHT / 2);
+        this.testEnemy = new Homikazee(this, GAMEWIDTH * 1.25, GAMEHEIGHT/2);
+        this.secondEnemy = new Homikazee(this, GAMEWIDTH * 1.2, GAMEHEIGHT * 0.5);
 
         this.testEnemy.scale = 3;
         this.secondEnemy.scale = 3;
@@ -61,9 +61,9 @@ class MainGame extends Phaser.Scene {
 
         };
 
-        this.testPowerup = new ShotgunPowerup(this, game.config.width * 1.2, this.sys.canvas.height / 2);
+        this.testPowerup = new ShotgunPowerup(this, game.config.width * 1.2, GAMEHEIGHT / 2);
 
-        this.playerHealthLabel = this.add.bitmapText(game.config.width * 0.1, game.config.height * 0.8, "pixelFont", "hp: " + this.player.health, 50);
+        this.playerHealthLabel = this.add.bitmapText(game.config.width * 0.1, GAMEHEIGHT * 0.8, "pixelFont", "hp: " + this.player.health, 50);
         this.playerHealthLabel.setDepth(10);
 
 
@@ -171,6 +171,7 @@ class MainGame extends Phaser.Scene {
     update() {
 
 
+
         if (this.player.iFrame != undefined && this.player.iFrame.progress === 1) {
             this.player.isInvincible = false;
         }
@@ -189,8 +190,8 @@ class MainGame extends Phaser.Scene {
     //
     // }
 
-        let width = this.sys.canvas.width;
-        let height = this.sys.canvas.height;
+        let width = GAMEWIDTH;
+        let height = GAMEHEIGHT;
         this.projectiles.getChildren().forEach(function(projectile) {
             console.log(projectile.name);
             projectile.update();

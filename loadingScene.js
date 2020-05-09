@@ -5,28 +5,30 @@ class LoadingScene extends Phaser.Scene {
 
     preload() {
 
+
         this.load.image("loadingLogo", "assets/fireLoadingLogo.png");
         this.load.image("loadingBar", "assets/loadingBar.png");
         //this.load.image("loadingBarFill", "assets/loadingBarFill.png");
 
-        this.loadingLogo = this.add.sprite( 400, game.config.height * 0.3, "loadingLogo");
+
+        this.loadingLogo = this.add.sprite( GAMEWIDTH / 2, GAMEHEIGHT * 0.3, "loadingLogo");
 
         this.loadingLogo.setOrigin(0.5,0.5);
         this.loadingLogo.scale = 3.5;
 
-        this.loadingBar = this.add.sprite(400, game.config.height * 0.5, "loadingBar");
+        this.loadingBar = this.add.sprite(GAMEWIDTH / 2, GAMEHEIGHT / 2, "loadingBar");
         this.loadingBar.setOrigin(0.5,0.5);
         this.loadingBar.scale = 5;
         this.loadingBar.displayWidth = 330;
         this.loadingBar.displayHeight = 60;
 
-        // this.loadingBarFill = this.add.sprite(game.config.width / 2, game.config.height * 0.5, "loadingBarFill");
+        // this.loadingBarFill = this.add.sprite(game.config.width / 2, GAMEHEIGHT * 0.5, "loadingBarFill");
         // this.loadingBarFill.setOrigin(0.5,0.5);
         // this.load.setPreloadSprite(this.loadingBarFill);
 
         this.loadingBarFill = this.add.graphics();
         this.loadingBarFill.fillStyle(0x222222, 0);
-        this.loadingBarFill.fillRect(240, 285, 320, 60);
+        this.loadingBarFill.fillRect(this.loadingBar.x, this.loadingBar.y, 320, 60);
 
 
 
@@ -86,14 +88,15 @@ class LoadingScene extends Phaser.Scene {
 
         this.load.on("progress", (value) => {
             this.loadingBarFill.fillStyle(0xffffff, 1);
-            this.loadingBarFill.fillRect(250, 285, 300 * value, 30);
+            this.loadingBarFill.fillRect((this.loadingBar.x - this.loadingBar.displayWidth * 0.45), this.loadingBar.y - 15, 300 * value, 30);
         });
 
-        // this.load.on("complete", (args) => {
-        //     this.loadingBarFill.destroy();
-        //     this.loadingBar.destroy();
-        //     this.loadingLogo.destroy();
-        // });
+        this.load.on("complete", (args) => {
+            this.loadingBarFill.destroy();
+            this.loadingBar.destroy();
+            this.loadingLogo.destroy();
+            this.scene.start("introScene");
+        });
     }
 
     create() {
@@ -155,7 +158,7 @@ class LoadingScene extends Phaser.Scene {
             repeat: -1
         });
 
-        this.scene.start("introScene");
+
     }
 
 

@@ -3,8 +3,8 @@
 body {
     font-family: 'VT323', sans-serif !important;
     font-size: 600;
-}
 
-.game {
-    padding-left: 90px;
+}
+canvas {
+    padding-left: 5%;
 }
