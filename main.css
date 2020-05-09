@@ -10,14 +10,15 @@ body {
     image-rendering: -o-crisp-edges;             /* OS X & Windows Opera (12.02+) */
     image-rendering: crisp-edges;                /* Possible future browsers. */
     -ms-interpolation-mode: nearest-neighbor;    /* IE (non standard naming) */
-    image-rendering: pixelated;     
+    image-rendering: pixelated;
 
 
 }
 canvas {
     padding-left: 25%;
+
     position: fixed;
-    z-index: 1
+
 
 
 
@@ -27,7 +28,6 @@ canvas {
     background-color: #f5f5f5;
     width: 100%;
     height: 65%;
-    background-image: url("goldenAlien.png"), url("astronaut.png");
     background-position: left bottom, right bottom;
     background-image: url(assets/goldenAlien.png), url(assets/astronaut.png);
     background-size: 20%, 20%;
@@ -36,8 +36,29 @@ canvas {
     z-index: -1;
 }
 
+.lore-banner {
+    position: fixed;
+    background-color: #f5f5f5;
+    width: 100%;
+    height: 65%;
+    background-position: left bottom, right bottom;
+    background-image: url(assets/bgsprites/bgsprites_0.png), url(assets/bgsprites/bgsprites_2.png);
+    background-size: 20%, 20%;
+
+    background-repeat: no-repeat;
+    z-index: -1;
+}
+
+.infoSprite {
+    width: 10%;
+}
+
 
 .column-image {
     padding-left: 0;
 
+}
+
+.container {
+    z-index: -1;
 }
