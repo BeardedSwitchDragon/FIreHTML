@@ -65,6 +65,16 @@ class Peashooter extends Projectile {
     }
 }
 
+class MachineGun extends Projectile {
+    constructor(scene, x, y, isFlipped) {
+        super(scene, 15, 0.85, x, y, "machinegun", 800, isFlipped);
+        this.play("machinegun_anim", true);
+        this.randomOffset = Math.random() * 10;
+        this.y += this.randomOffset;
+        this.scale = 3;
+    }
+}
+
 class Shotgun extends Projectile {
     constructor(scene, x, y, isFlipped, bulletNumber) {
         super(scene, 4, 10, x, y, "shotgun", 300, isFlipped);
@@ -72,7 +82,7 @@ class Shotgun extends Projectile {
         this.play("shotgun_anim", true);
         console.log(bulletNumber);
         this.body.velocity.y =  50 * (bulletNumber - 1);
-        
+
 
 
     }

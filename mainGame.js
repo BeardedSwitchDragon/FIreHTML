@@ -24,7 +24,7 @@ class MainGame extends Phaser.Scene {
 
         this.mountain_bg = this.add.tileSprite(0, 0, game.config.width, GROUND_HEIGHT, "mountain_bg");
 
-        this.mountain_bg.tilePositionY = GROUND_HEIGHT / 8.76;
+        this.mountain_bg.tilePositionY = GROUND_HEIGHT / 8.2;
         this.mountain_bg.setOrigin(0,0);
         this.mountain_bg.setScrollFactor(0);
 
@@ -61,7 +61,8 @@ class MainGame extends Phaser.Scene {
 
         this.projectileROF = {
             peashooter: 500,
-            shotgun: 750
+            shotgun: 750,
+            machineGun: 85
 
         };
 
@@ -84,6 +85,11 @@ class MainGame extends Phaser.Scene {
 
         this.peaTimer = new Date().getTime();
         this.shotTimer = new Date().getTime();
+        this.machTimer = new Date().getTime();
+
+        this.machCoolDownTimer = new Date().getTime();
+        this.machCoolDownLength = 3000;
+        this.machMaxBullets = 30;
 
 
 
@@ -92,10 +98,7 @@ class MainGame extends Phaser.Scene {
 
 
         this.physics.add.collider(this.projectiles, this.enemies, function(projectile, enemy) {
-            ("collision is working");
-            (projectile.body);
-            (enemy.body);
-            (projectile.damageToDeal);
+
             enemy.takeDamage(projectile.damageToDeal);
             projectile.destroy();
 
@@ -248,6 +251,7 @@ class MainGame extends Phaser.Scene {
             this.canShoot = false;
             this.peaTimer = new Date().getTime();
         } else if (this.periodKey.isDown) {
+            console.log(this.player.availableWeapons.machineGun);
             if (this.player.availableWeapons.shotgun === true) {
                 this.shootProjectile("shotgun");
             } else if (this.player.availableWeapons.machineGun === true) {
@@ -311,7 +315,7 @@ class MainGame extends Phaser.Scene {
 
             break;
             case "shotgun":
-            if (new Date().getTime() - this.shotTimer > this.projectileROF.shotgun) {
+            if (new Date().getTime() - this.shotTimer >= this.projectileROF.shotgun) {
                 for (var trajectory = 0; trajectory <= 2; trajectory++) {
                     console.log(trajectory);
                     projectile = new Shotgun(this, x, y, this.player.flipX, trajectory);
@@ -322,6 +326,27 @@ class MainGame extends Phaser.Scene {
             }
 
 
+            break;
+
+            case "machineGun":
+
+            if (new Date().getTime() - this.machTimer >= this.projectileROF.machineGun) {
+
+
+                if (this.machMaxBullets > 0) {
+
+                    projectile = new MachineGun(this, x, y, this.player.flipX);
+                    this.canShoot = false;
+                    this.machTimer = new Date().getTime();
+                    this.machCoolDownTimer = new Date().getTime();
+
+                    this.machMaxBullets--;
+
+                } else if (new Date().getTime() - this.machCoolDownTimer >= this.machCoolDownLength) {
+                    this.machMaxBullets = 30;
+                }
+
+            }
             break;
             default:
                 ("gun not found");

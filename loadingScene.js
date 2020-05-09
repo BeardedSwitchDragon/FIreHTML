@@ -76,6 +76,10 @@ class LoadingScene extends Phaser.Scene {
             frameHeight: 32
 
         });
+        this.load.spritesheet("machinegun", "assets/machineGunSpritesheet.png", {
+            frameWidth: 11,
+            frameHeight: 6
+        });
 
         //ANIMATIONS:
 
@@ -155,6 +159,13 @@ class LoadingScene extends Phaser.Scene {
             key: "shotgun_anim",
             frames: this.anims.generateFrameNumbers("shotgun"),
             frameRate: 11,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "machinegun_anim",
+            frames: this.anims.generateFrameNumbers("machinegun"),
+            frameRate: 12,
             repeat: -1
         });
 
