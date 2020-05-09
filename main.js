@@ -2,10 +2,10 @@
 
 
 //BIIIG thanks to KingCosmic & samme on discord for helping me solve a bunch of bugs
-const GAMEWIDTH = window.innerWidth - 200;
-const GAMEHEIGHT = 600;
+const GAMEWIDTH = window.innerWidth / 2;
+const GAMEHEIGHT = window.innerHeight * 0.65;
 var config = {
-    type: Phaser.AUTO,
+    type: Phaser.CANVAS, // <--- Pixel art tilesprites render better in canvas than WebGL.
     width: GAMEWIDTH,
     height: GAMEHEIGHT,
     pixelArt: true,

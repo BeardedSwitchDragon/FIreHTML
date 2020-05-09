@@ -11,6 +11,8 @@ class MainGame extends Phaser.Scene {
 
     create() {
         const GROUND_HEIGHT = GAMEHEIGHT * 3;
+        const GROUND_SCALE = 2;
+        console.log(GROUND_HEIGHT / 175);
         this.cameras.main.setBackgroundColor("#F2C0A2");
 
         // this.clouds = this.add.tileSprite(0,0, game.config.width, GROUND_HEIGHT, "cloud_bg");
@@ -22,13 +24,15 @@ class MainGame extends Phaser.Scene {
 
         this.mountain_bg = this.add.tileSprite(0, 0, game.config.width, GROUND_HEIGHT, "mountain_bg");
 
-        this.mountain_bg.tilePositionY = 240;
+        this.mountain_bg.tilePositionY = GROUND_HEIGHT / 8.76;
         this.mountain_bg.setOrigin(0,0);
         this.mountain_bg.setScrollFactor(0);
 
         this.ground_bg = this.add.tileSprite(0.5, 0.5, game.config.width, GROUND_HEIGHT, "ground_bg");
         //this.ground_bg.flipY = true;
-
+        this.ground_bg.tilePositionY = GROUND_HEIGHT / 12;
+        this.ground_bg.tileScaleY = GROUND_SCALE;
+        this.ground_bg.tileScaleX = GROUND_SCALE + 0.1;
 
         this.ground_bg.setOrigin(0,0);
         this.ground_bg.setScrollFactor(0);
