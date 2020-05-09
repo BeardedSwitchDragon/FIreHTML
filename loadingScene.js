@@ -7,6 +7,7 @@ class LoadingScene extends Phaser.Scene {
 
 
         this.load.image("loadingLogo", "assets/fireLoadingLogo.png");
+
         this.load.image("loadingBar", "assets/loadingBar.png");
         //this.load.image("loadingBarFill", "assets/loadingBarFill.png");
 
@@ -22,6 +23,7 @@ class LoadingScene extends Phaser.Scene {
         this.loadingBar.displayWidth = 330;
         this.loadingBar.displayHeight = 60;
 
+
         // this.loadingBarFill = this.add.sprite(game.config.width / 2, GAMEHEIGHT * 0.5, "loadingBarFill");
         // this.loadingBarFill.setOrigin(0.5,0.5);
         // this.load.setPreloadSprite(this.loadingBarFill);
@@ -30,7 +32,13 @@ class LoadingScene extends Phaser.Scene {
         this.loadingBarFill.fillStyle(0x222222, 0);
         this.loadingBarFill.fillRect(this.loadingBar.x, this.loadingBar.y, 320, 60);
 
+        //LOAD:
+        this.load.image("logo", "assets/fireLogo.png");
 
+        this.load.spritesheet("playButton", "assets/buttonSpritesheet.png", {
+            frameWidth: 85,
+            frameHeight: 49
+        });
 
         this.load.bitmapFont("pixelFont", "assets/font/font.png", "assets/font/font.xml");
 
@@ -81,10 +89,10 @@ class LoadingScene extends Phaser.Scene {
             frameHeight: 6
         });
 
-        //ANIMATIONS:
 
 
-        ("lolll");
+
+
 
 
 
@@ -104,6 +112,8 @@ class LoadingScene extends Phaser.Scene {
     }
 
     create() {
+        //ANIMATIONS:
+
         this.anims.create({
             key: "player_anim",
             frames: this.anims.generateFrameNumbers("player"),
