@@ -11,7 +11,7 @@ class MainGame extends Phaser.Scene {
 
     create() {
 
-        
+
         const GROUND_HEIGHT = GAMEHEIGHT * 3;
         const GROUND_SCALE = 2;
         console.log(GROUND_HEIGHT / 175);
@@ -27,6 +27,7 @@ class MainGame extends Phaser.Scene {
         this.mountain_bg = this.add.tileSprite(0, 0, game.config.width, GROUND_HEIGHT, "mountain_bg");
 
         this.mountain_bg.tilePositionY = GROUND_HEIGHT / 8.2;
+        this.mountain_bg.scale = 1.5;
         this.mountain_bg.setOrigin(0,0);
         this.mountain_bg.setScrollFactor(0);
 
@@ -82,6 +83,9 @@ class MainGame extends Phaser.Scene {
         this.shiftKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SHIFT);
         this.commaKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.COMMA);
         this.periodKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.PERIOD);
+        this.slashKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.FORWARD_SLASH);
+
+
 
         var hasStarted = false;
 
@@ -138,14 +142,41 @@ class MainGame extends Phaser.Scene {
             powerup.destroy();
             console.log(powerup.name);
             switch (powerup.name) {
+
                 case "shotgun_powerup":
+
                 player.availableWeapons.shotgun = true;
+                //reversed so first one gets replaced if slots are full
+                if (player.weaponSlot.slotTwo === "none") {
+
+                    player.weaponSlot.slotTwo = "shotgun";
+                } else if (player.weaponSlot.slotOne === "none") {
+
+                    player.weaponSlot.slotOne = "shotgun"
+                }
                 break;
+
                 case "machinegun_powerup":
+
                 player.availableWeapons.machineGun = true;
+                if (player.weaponSlot.slotOne !== "machinegun") {
+
+                    player.weaponSlot.slotOne = "machinegun";
+                } else if (player.weaponSlot.slotTwo !== "machinegun") {
+
+                    player.weaponSlot.sloteTwo = "machinegun"
+                }
                 break;
                 case "locker":
+
                 player.availableWeapons.locker = true;
+                if (player.weaponSlot.slotOne !== "locker") {
+
+                    player.weaponSlot.slotOne = "locker";
+                } else if (player.weaponSlot.slotTwo !== "locker") {
+
+                    player.weaponSlot.sloteTwo = "locker"
+                }
                 break;
 
                 default:
@@ -254,13 +285,16 @@ class MainGame extends Phaser.Scene {
             this.peaTimer = new Date().getTime();
         } else if (this.periodKey.isDown) {
             console.log(this.player.availableWeapons.machineGun);
-            if (this.player.availableWeapons.shotgun === true) {
-                this.shootProjectile("shotgun");
-            } else if (this.player.availableWeapons.machineGun === true) {
-                this.shootProjectile("machineGun");
-            } else if (this.player.availableWeapons.locker === true) {
-                this.shootProjectile("locker");
-            }
+            // if (this.player.availableWeapons.shotgun === true) {
+            //     this.shootProjectile("shotgun");
+            // } else if (this.player.availableWeapons.machineGun === true) {
+            //     this.shootProjectile("machineGun");
+            // } else if (this.player.availableWeapons.locker === true) {
+            //     this.shootProjectile("locker");
+            // }
+            this.shootProjectile(this.player.weaponSlot.slotOne);
+        } else if (this.slashKey.isDown) {
+            this.shootProjectile(this.player.weaponSlot.slotTwo);
         } else if (this.shiftKey.isDown) {
 
             this.player.boost = 3;
@@ -330,7 +364,7 @@ class MainGame extends Phaser.Scene {
 
             break;
 
-            case "machineGun":
+            case "machinegun":
 
             if (new Date().getTime() - this.machTimer >= this.projectileROF.machineGun) {
 
