@@ -28,8 +28,7 @@ var config = {
 //             shootProjectile: shootProjectile
 //         }
 //     }
-    scene: [BootScene, LoadingScene, Intro, MainGame],
-    canvas: document.querySelector("game")
+    scene: [BootScene, LoadingScene, Intro, MainGame]
 };
 
 

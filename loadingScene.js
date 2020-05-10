@@ -114,6 +114,8 @@ class LoadingScene extends Phaser.Scene {
     create() {
         //ANIMATIONS:
 
+        
+
         this.anims.create({
             key: "player_anim",
             frames: this.anims.generateFrameNumbers("player"),

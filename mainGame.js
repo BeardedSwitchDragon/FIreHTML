@@ -10,6 +10,8 @@ class MainGame extends Phaser.Scene {
 
 
     create() {
+
+        
         const GROUND_HEIGHT = GAMEHEIGHT * 3;
         const GROUND_SCALE = 2;
         console.log(GROUND_HEIGHT / 175);
