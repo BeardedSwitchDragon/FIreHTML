@@ -66,12 +66,18 @@ class Peashooter extends Projectile {
 }
 
 class MachineGun extends Projectile {
-    constructor(scene, x, y, isFlipped) {
-        super(scene, 15, 0.85, x, y, "machinegun", 800, isFlipped);
-        this.play("machinegun_anim", true);
+    constructor(scene, x, y, isFlipped, name="machinegun") {
+        super(scene, 15, 0.85, x, y, name, 800, isFlipped);
+        this.play(name + "_anim", true);
         this.randomOffset = Math.random() * 10;
         this.y += this.randomOffset;
         this.scale = 3;
+    }
+}
+
+class AirSwimmerMachineGun extends MachineGun {
+    constructor(scene, x, y, isFlipped) {
+        super(scene, x, y, isFlipped, "airSwimmerBullet");
     }
 }
 

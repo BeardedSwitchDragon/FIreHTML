@@ -71,6 +71,11 @@ class LoadingScene extends Phaser.Scene {
             frameHeight: 16
         });
 
+        this.load.spritesheet("airswimmer", "assets/airswimmerSpritesheet.png", {
+            frameWidth: 32,
+            frameHeight: 21
+        });
+
         this.load.spritesheet("homikazee", "assets/homikazeeSpritesheet.png", {
             frameWidth: 32,
             frameHeight: 17
@@ -85,6 +90,10 @@ class LoadingScene extends Phaser.Scene {
 
         });
         this.load.spritesheet("machinegun", "assets/machineGunSpritesheet.png", {
+            frameWidth: 11,
+            frameHeight: 6
+        });
+        this.load.spritesheet("airSwimmerBullet", "assets/airSwimmerBullet.png", {
             frameWidth: 11,
             frameHeight: 6
         });
@@ -114,7 +123,7 @@ class LoadingScene extends Phaser.Scene {
     create() {
         //ANIMATIONS:
 
-        
+
 
         this.anims.create({
             key: "player_anim",
@@ -177,6 +186,20 @@ class LoadingScene extends Phaser.Scene {
         this.anims.create({
             key: "machinegun_anim",
             frames: this.anims.generateFrameNumbers("machinegun"),
+            frameRate: 12,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "airSwimmerBullet_anim",
+            frames: this.anims.generateFrameNumbers("airSwimmerBullet"),
+            frameRate: 12,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "airswimmer_anim",
+            frames: this.anims.generateFrameNumbers("airswimmer"),
             frameRate: 12,
             repeat: -1
         });

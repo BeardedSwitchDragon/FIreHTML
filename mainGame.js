@@ -26,8 +26,8 @@ class MainGame extends Phaser.Scene {
 
         this.mountain_bg = this.add.tileSprite(0, 0, game.config.width, GROUND_HEIGHT, "mountain_bg");
 
-        this.mountain_bg.tilePositionY = GROUND_HEIGHT / 8.2;
-        this.mountain_bg.scale = 1.5;
+        this.mountain_bg.tilePositionY = GROUND_HEIGHT / 5.7;
+        this.mountain_bg.scale = 1.6;
         this.mountain_bg.setOrigin(0,0);
         this.mountain_bg.setScrollFactor(0);
 
@@ -52,7 +52,7 @@ class MainGame extends Phaser.Scene {
         this.enemies = this.add.group();
         this.player = this.makePlayer(GAMEWIDTH / 2, GAMEHEIGHT / 2);
         this.testEnemy = new Homikazee(this, GAMEWIDTH * 1.25, GAMEHEIGHT/2);
-        this.secondEnemy = new Homikazee(this, GAMEWIDTH * 1.2, GAMEHEIGHT * 0.5);
+        this.secondEnemy = new AirSwimmer(this, GAMEWIDTH * 1.2, GAMEHEIGHT * 0.5);
 
         this.testEnemy.scale = 3;
         this.secondEnemy.scale = 3;
@@ -190,7 +190,7 @@ class MainGame extends Phaser.Scene {
 
         //this.player.playIFrame();
 
-        //this.testEnemy.travel(this.player, this);
+        //this.testEnemy.homikazeeTravel(this.player, this);
         //this.cameras.main.startFollow(this.player);
     }
 
@@ -297,7 +297,7 @@ class MainGame extends Phaser.Scene {
             this.shootProjectile(this.player.weaponSlot.slotTwo);
         } else if (this.shiftKey.isDown) {
 
-            this.player.boost = 3;
+            this.player.boost = 4;
             //("pressing shift");
             this.player.play("player_boost", true);
         }
@@ -332,7 +332,19 @@ class MainGame extends Phaser.Scene {
 
     updateEnemies(enemy) {
         if (enemy.body != undefined) {
-            enemy.travel(this.player, this);
+
+            switch (enemy.name) {
+                case "homikazee":
+                enemy.homikazeeTravel(this.player, this);
+                break;
+                case "airswimmer":
+                enemy.airSwimmerTravel(this.player, this);
+                break;
+                default:
+                console.log("enemy not found.");
+
+            }
+
             enemy.update();
         }
     }

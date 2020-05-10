@@ -54,10 +54,13 @@ class Intro extends Phaser.Scene {
         });
 
         this.playButton.on("pointerdown", () => {
+            this.playButton.destroy();
+            this.playLabel.destroy();
+            this.logo.destroy();
             this.scene.start("mainGame");
         })
 
-    
+
 
     }
 }
