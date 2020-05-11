@@ -77,6 +77,11 @@ class MachineGun extends Projectile {
 
 class AirSwimmerMachineGun extends MachineGun {
     constructor(scene, x, y, isFlipped) {
+        if (isFlipped === true) {
+            isFlipped = false;
+        } else {
+            isFlipped = true;
+        }
         super(scene, x, y, isFlipped, "airSwimmerBullet");
     }
 }

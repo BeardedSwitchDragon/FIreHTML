@@ -339,6 +339,7 @@ class MainGame extends Phaser.Scene {
                 break;
                 case "airswimmer":
                 enemy.airSwimmerTravel(this.player, this);
+                enemy.shoot(this);
                 break;
                 default:
                 console.log("enemy not found.");

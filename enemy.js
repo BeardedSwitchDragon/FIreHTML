@@ -19,6 +19,8 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
 
 
+
+
     }
 
     travel(target, scene, rotate=false, xOffset=0, yOffset=0) {
@@ -40,7 +42,10 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
 
 
+
+
     }
+
 
     takeDamage(damage) {
         this.health -= damage;
@@ -54,21 +59,42 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
         this.on("animationcomplete", this.destroy);
     }
+
+    update() {
+        if (this.health <= 0) {
+            this.destruct();
+        }
+
+    }
+
+
 }
 
 class AirSwimmer extends Enemy {
     constructor(scene, x, y) {
         super(scene,x,y, 5, 10, 75);
         this.name = "airswimmer";
+        this.coolDownTime = 500;
+        this.shootTime = 1000;
 
-        this.play("airswimmer_anim");
+        this.shootTimer = new Date().getTime();
+
+        this.play("airswimmer_anim", true);
 
     }
     airSwimmerTravel(target, scene) {
         this.travel(target, scene, false, 300);
     }
 
-    
+    shoot(scene) {
+        if (new Date().getTime() - this.shootTimer >= scene.projectileROF.machineGun) {
+            let bullet = new AirSwimmerMachineGun(scene, this.x, this.y, this.flipX);
+            console.log(this.x);
+        }
+    }
+
+
+
 }
 
 class Homikazee extends Enemy {
@@ -86,16 +112,11 @@ class Homikazee extends Enemy {
 
 
 
+
+
     homikazeeTravel(target, scene) {
         this.travel(target, scene, true);
     }
 
-    update() {
 
-        if (this.health <= 0) {
-            this.destruct();
-        }
-
-
-    }
 }
