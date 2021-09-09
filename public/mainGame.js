@@ -278,12 +278,12 @@ class MainGame extends Phaser.Scene {
             }
 
 //README: THIS MUST BE THE LAST TEST (SHIFT TO BOOST)
-        if (this.commaKey.isDown && (new Date().getTime() - this.peaTimer > this.projectileROF.peashooter)) {
+        if (this.commaKey.isDown && (new Date().getTime() - this.peaTimer > this.projectileROF.peashooter) && (this.shiftKey.isDown === false)) {
 
             this.shootProjectile("peashooter");
             this.canShoot = false;
             this.peaTimer = new Date().getTime();
-        } else if (this.periodKey.isDown) {
+        } else if (this.periodKey.isDown && (this.shiftKey.isDown === false)) {
             console.log(this.player.availableWeapons.machineGun);
             // if (this.player.availableWeapons.shotgun === true) {
             //     this.shootProjectile("shotgun");
@@ -293,7 +293,7 @@ class MainGame extends Phaser.Scene {
             //     this.shootProjectile("locker");
             // }
             this.shootProjectile(this.player.weaponSlot.slotOne);
-        } else if (this.slashKey.isDown) {
+        } else if (this.slashKey.isDown && (this.shiftKey.isDown === false)) {
             this.shootProjectile(this.player.weaponSlot.slotTwo);
         } else if (this.shiftKey.isDown) {
 
