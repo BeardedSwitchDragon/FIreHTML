@@ -1,5 +1,5 @@
 class Projectile extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, speed, damageToDeal, x, y, name, life, isFlipped) {
+    constructor(scene, speed, damageToDeal, x, y, name, life, isFlipped, isEnemyProjectile) {
 
         super(scene, x, y, name);
         this.speed = 100 + (speed * 20);
@@ -12,7 +12,12 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
         this.name = name;
         this.flipX = isFlipped;
         scene.add.sprite(this);
-        scene.projectiles.add(this);
+        if (isEnemyProjectile) {
+            scene.enemyProjectiles.add(this);
+        } else {
+            scene.projectiles.add(this);
+        }
+        
         scene.add.existing(this);
         scene.physics.world.enableBody(this);
 
@@ -67,7 +72,7 @@ class Peashooter extends Projectile {
 
 class MachineGun extends Projectile {
     constructor(scene, x, y, isFlipped, name="machinegun") {
-        super(scene, 15, 0.85, x, y, name, 800, isFlipped);
+        super(scene, 15, 0.85, x, y, name, 800, isFlipped, true);
         this.play(name + "_anim", true);
         this.randomOffset = Math.random() * 10;
         this.y += this.randomOffset;

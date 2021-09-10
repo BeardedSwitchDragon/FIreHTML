@@ -44,22 +44,19 @@ class MainGame extends Phaser.Scene {
         this.sun.setOrigin(0,0);
         this.sun.scale = 3;
 
-
+        this.spawnedTestEnemy = false;
 
         // this.mountain_bg.tileScaleX = 1.1;
         // this.mountain_bg.tileScaleY = 1.1;
         //this.mountain_bg.setSize(game.config.width, GROUND_HEIGHT);
         this.enemies = this.add.group();
         this.player = this.makePlayer(GAMEWIDTH / 2, GAMEHEIGHT / 2);
-        this.testEnemy = new Homikazee(this, GAMEWIDTH * 1.25, GAMEHEIGHT/2);
-        this.secondEnemy = new AirSwimmer(this, GAMEWIDTH * 1.2, GAMEHEIGHT * 0.5);
-
-        this.testEnemy.scale = 3;
-        this.secondEnemy.scale = 3;
+        
 
 
         this.canShoot = true;
         this.projectiles = this.add.group();
+        this.enemyProjectiles = this.add.group();
         this.powerups = this.add.group();
 
         this.projectileROF = {
@@ -100,7 +97,7 @@ class MainGame extends Phaser.Scene {
 
 
 
-        this.testEnemy.play("homikazee_anim");
+        
 
 
         this.physics.add.collider(this.projectiles, this.enemies, function(projectile, enemy) {
@@ -110,6 +107,11 @@ class MainGame extends Phaser.Scene {
 
 
         });
+
+        this.physics.add.collider(this.enemyProjectiles, this.player, function(projectile, player) {
+            player.takeDamage(projectile.damageToDeal);
+            projectile.destroy();
+        })
 
         this.physics.add.overlap(this.enemies, this.player, function(enemy, player) {
 
@@ -208,6 +210,7 @@ class MainGame extends Phaser.Scene {
 
 
 
+    //Calls below code every frame
     update() {
 
 
@@ -311,6 +314,15 @@ class MainGame extends Phaser.Scene {
         this.player.x++;
         this.sun.x++;
         this.playerHealthLabel.x++;
+
+        if (this.player.x >= 100 && this.spawnedTestEnemy === false) {
+            this.testEnemy = new Homikazee(this, this.player.x * 3.5, GAMEHEIGHT/2);
+            this.secondEnemy = new AirSwimmer(this, this.player.x * 3.5, GAMEHEIGHT * 0.5);
+
+            this.testEnemy.scale = 3;
+            this.secondEnemy.scale = 3;
+            this.spawnedTestEnemy = true;
+        }
 
 
     }
