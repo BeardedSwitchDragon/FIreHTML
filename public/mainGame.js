@@ -240,6 +240,10 @@ class MainGame extends Phaser.Scene {
             projectile.update();
         });
 
+        this.enemyProjectiles.getChildren().forEach(function(projectile) {
+            projectile.update();
+        });
+
         for (var enemyIndex = 0; enemyIndex < this.enemies.getChildren().length; enemyIndex++) {
             this.updateEnemies(this.enemies.getChildren()[enemyIndex]);
         }
