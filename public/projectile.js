@@ -1,6 +1,7 @@
 class Projectile extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene, speed, damageToDeal, x, y, name, life, isFlipped, isEnemyProjectile) {
+    constructor({scene, speed, damageToDeal, x, y, name, life, isFlipped, isEnemyProjectile}) {
 
+        console.log(scene);
         super(scene, x, y, name);
         this.speed = 100 + (speed * 20);
         this.damageToDeal = damageToDeal;
@@ -11,7 +12,11 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
         this.life = life;
         this.name = name;
         this.flipX = isFlipped;
+        this.isEnemyProjectile = isEnemyProjectile;
+
         scene.add.sprite(this);
+        console.log(isFlipped);
+        
         if (isEnemyProjectile) {
             scene.enemyProjectiles.add(this);
         } else {
@@ -65,14 +70,14 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
 
 class Peashooter extends Projectile {
     constructor(scene, x, y, isFlipped) {
-        super(scene, 8, 5, x, y, "peashooter", 400, isFlipped);
+        super({scene, speed: 8, damageToDeal: 5, x, y, name: "peashooter", life: 400, isFlipped, isEnemyProjectile: false});
         this.play("peashooter_anim", true);
     }
 }
 
 class MachineGun extends Projectile {
     constructor(scene, x, y, isFlipped, name="machinegun") {
-        super(scene, 15, 0.85, x, y, name, 800, isFlipped, true);
+        super({scene, speed: 15, damageToDeal: 0.85, x, y, name, life: 800, isFlipped, isEnemyProjectile: false});
         this.play(name + "_anim", true);
         this.randomOffset = Math.random() * 10;
         this.y += this.randomOffset;
@@ -86,14 +91,18 @@ class AirSwimmerMachineGun extends MachineGun {
             isFlipped = false;
         } else {
             isFlipped = true;
-        }
-        super(scene, x, y, isFlipped, "airSwimmerBullet");
+        };
+        console.log(scene);
+        super({scene, speed: 12, damageToDeal: 0.9, x, y, name: "airSwimmerBullet", life: 760, isFlipped, isEnemyProjectile: true});
+        this.isEnemyProjectile = true;
+        
+        this.play("airSwimmerBullet" + "_anim", true);
     }
 }
 
 class Shotgun extends Projectile {
     constructor(scene, x, y, isFlipped, bulletNumber) {
-        super(scene, 4, 10, x, y, "shotgun", 300, isFlipped);
+        super({scene, speed: 4, damageToDeal: 12, x, y, name: "shotgun", life: 300, isFlipped, isEnemyProjectile: false});
         this.setFriction(0.1);
         this.play("shotgun_anim", true);
         console.log(bulletNumber);
