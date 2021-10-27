@@ -93,7 +93,7 @@ class AirSwimmerMachineGun extends MachineGun {
             isFlipped = true;
         };
         console.log(scene);
-        super({scene, speed: 12, damageToDeal: 0.9, x, y, name: "airSwimmerBullet", life: 760, isFlipped, isEnemyProjectile: true});
+        super({scene, speed: 12, damageToDeal: 0.9, x, y, name: "airSwimmerBullet", life: 760, isFlipped, isEnemyProjectile: false});
         this.isEnemyProjectile = true;
         
         this.play("airSwimmerBullet" + "_anim", true);

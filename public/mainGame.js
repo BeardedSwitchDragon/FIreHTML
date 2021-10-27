@@ -354,8 +354,8 @@ class MainGame extends Phaser.Scene {
                 enemy.homikazeeTravel(this.player, this);
                 break;
                 case "airswimmer":
-                enemy.airSwimmerTravel(this.player, this);
-                enemy.shoot(this);
+                // enemy.airSwimmerTravel(this.player, this);
+                // enemy.shoot(this);
                 break;
                 default:
                 console.log("enemy not found.");
