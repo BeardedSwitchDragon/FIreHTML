@@ -14,7 +14,7 @@ class MainGame extends Phaser.Scene {
 
         const GROUND_HEIGHT = GAMEHEIGHT * 3;
         const GROUND_SCALE = 2;
-        console.log(GROUND_HEIGHT / 175);
+        //console.log(GROUND_HEIGHT / 175);
         this.cameras.main.setBackgroundColor("#F2C0A2");
 
         // this.clouds = this.add.tileSprite(0,0, game.config.width, GROUND_HEIGHT, "cloud_bg");
@@ -142,7 +142,7 @@ class MainGame extends Phaser.Scene {
 
         this.physics.add.overlap(this.player, this.powerups, function(player, powerup) {
             powerup.destroy();
-            console.log(powerup.name);
+           // console.log(powerup.name);
             switch (powerup.name) {
 
                 case "shotgun_powerup":
@@ -236,7 +236,7 @@ class MainGame extends Phaser.Scene {
         let width = GAMEWIDTH;
         let height = GAMEHEIGHT;
         this.projectiles.getChildren().forEach(function(projectile) {
-            console.log(projectile.name);
+            //console.log(projectile.name);
             projectile.update();
         });
 
@@ -245,6 +245,7 @@ class MainGame extends Phaser.Scene {
         });
 
         for (var enemyIndex = 0; enemyIndex < this.enemies.getChildren().length; enemyIndex++) {
+            //console.log(this.enemies.getChildren()[enemyIndex]);
             this.updateEnemies(this.enemies.getChildren()[enemyIndex]);
         }
 
@@ -326,6 +327,8 @@ class MainGame extends Phaser.Scene {
             this.testEnemy.scale = 3;
             this.secondEnemy.scale = 3;
             this.spawnedTestEnemy = true;
+            this.enemies.add(this.testEnemy);
+            this.enemies.add(this.secondEnemy);
         }
 
 
@@ -354,11 +357,11 @@ class MainGame extends Phaser.Scene {
                 enemy.homikazeeTravel(this.player, this);
                 break;
                 case "airswimmer":
-                // enemy.airSwimmerTravel(this.player, this);
-                // enemy.shoot(this);
+                enemy.airSwimmerTravel(this.player, this);
+                enemy.shoot(this);
                 break;
                 default:
-                console.log("enemy not found.");
+                //console.log("enemy not found.");
 
             }
 
@@ -371,19 +374,21 @@ class MainGame extends Phaser.Scene {
         let rateOfFire = 0;
         const x = this.player.x + 20;
         const y = this.player.y;
-        (this.player.flipX);
+        const flipX = this.player.flipX;
+        const stats = {x, y, flipX};
         let projectile;
 
         switch (projectile_name) {
             case "peashooter":
-            projectile = new Peashooter(this, x, y, this.player.flipX);
+            projectile = new Peashooter(this, x, y, flipX);
+            
 
             break;
             case "shotgun":
             if (new Date().getTime() - this.shotTimer >= this.projectileROF.shotgun) {
                 for (var trajectory = 0; trajectory <= 2; trajectory++) {
-                    console.log(trajectory);
-                    projectile = new Shotgun(this, x, y, this.player.flipX, trajectory);
+                    //console.log(trajectory);
+                    projectile = new Shotgun(this, x, y, flipX, trajectory);
 
                 }
                 this.canShoot = false;
@@ -400,7 +405,7 @@ class MainGame extends Phaser.Scene {
 
                 if (this.machMaxBullets > 0) {
 
-                    projectile = new MachineGun(this, x, y, this.player.flipX);
+                    projectile = new MachineGun(this, x, y, flipX);
                     this.canShoot = false;
                     this.machTimer = new Date().getTime();
                     this.machCoolDownTimer = new Date().getTime();

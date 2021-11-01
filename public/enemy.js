@@ -88,8 +88,13 @@ class AirSwimmer extends Enemy {
 
     shoot(scene) {
         if (new Date().getTime() - this.shootTimer >= scene.projectileROF.machineGun) {
-            let bullet = new AirSwimmerMachineGun(scene, this.x, this.y, this.flipX);
-            console.log(this.x);
+            const x = this.x;
+            const y = this.y;
+            //console.log(x);
+            const flipX = this.flipX;
+            let bullet = new AirSwimmerMachineGun(scene, x, y, flipX);
+            //console.log(this.x);
+            
         }
     }
 
