@@ -16,6 +16,7 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         this.x = x;
         this.y = y;
         this.scale = 2;
+        this.flipX = false;
         this.isInvincible = false;
         this.availableWeapons = {
             peashooter: true,
@@ -52,7 +53,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
     }
 
     playIFrame(hasStarted) {
-        ("adadadada");
 
         this.iFrame = this.scene.tweens.add({
             targets: this.scene.player,
@@ -71,6 +71,6 @@ class Player extends Phaser.Physics.Arcade.Sprite {
         // if (this.iFrameTween.progress === 1) {
         //     hasStarted = true;
         // }
-    }
+    };
 
 }

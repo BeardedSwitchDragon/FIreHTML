@@ -375,12 +375,11 @@ class MainGame extends Phaser.Scene {
         const x = this.player.x + 20;
         const y = this.player.y;
         const flipX = this.player.flipX;
-        const stats = {x, y, flipX};
         let projectile;
 
         switch (projectile_name) {
             case "peashooter":
-            projectile = new Peashooter(this, x, y, flipX);
+            projectile = new Peashooter(this, x, y,flipX);
             
 
             break;

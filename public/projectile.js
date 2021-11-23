@@ -13,7 +13,8 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
         this.begin = stats.x;
         this.life = stats.life;
         this.name = stats.name;
-        this.flipX = stats.flipX;
+        this.isFlipped = stats.isFlipped
+        console.log("stats.flipX: " + stats.isFlipped);
         this.isEnemyProjectile = stats.isEnemyProjectile;
 
         scene.add.sprite(this);
@@ -28,15 +29,13 @@ class Projectile extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);
         scene.physics.world.enableBody(this);
 
+        console.log(this.flipX);
 
-
-
-
-        (this.flipX);
-        if (this.flipX) {
+        //(this.flipX);
+        if (this.isFlipped) {
             this.speed *= -1;
-
         }
+        console.log("SPEEED " + this.speed);
         //(this.body);
         this.body.velocity.x = this.speed;
 
@@ -90,11 +89,11 @@ class MachineGun extends Projectile {
 class AirSwimmerMachineGun extends MachineGun {
     constructor(scene, x, y, isFlipped) {
         console.log(x);
-        if (isFlipped === true) {
-            isFlipped = false;
-        } else {
-            isFlipped = true;
-        };
+        // if (isFlipped === true) {
+        //     isFlipped = false;
+        // } else {
+        //     isFlipped = true;
+        // };
         // console.log(scene);
         super(scene, x, y, isFlipped);
         this.isEnemyProjectile = true;
