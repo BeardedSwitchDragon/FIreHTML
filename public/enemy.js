@@ -8,7 +8,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
         scene.physics.world.enableBody(this);
         scene.physics.add.sprite(this);
         this.setOrigin(0.5, 0.5);
-        this.flipX = true;
+        //this.flipX = false;
         this.x = x;
         this.y = y;
         this.speed = speed;
@@ -37,7 +37,7 @@ class Enemy extends Phaser.Physics.Arcade.Sprite {
 
 
         if (rotate === true) {
-            this.flipX = true;
+            this.flipX = false;
             this.rotation = Phaser.Math.Angle.Between(this.x, this.y, target.x, target.y);
         }
 
@@ -92,9 +92,9 @@ class AirSwimmer extends Enemy {
             const x = this.x;
             const y = this.y;
             //console.log(x);
-            this.flipX;
             
-            let bullet = new AirSwimmerMachineGun(scene, x, y, this.flipX);
+            
+            let bullet = new AirSwimmerMachineGun(scene, x, y, !this.flipX);
             //console.log(this.x);
             
         }
